@@ -8,10 +8,14 @@
 #
 # Inquery - India Query RESTful microservice
 # Copyright (c) 2020 Abhishek Chakravarti <abhishek@taranjali.org>. 
+# See the accompanying inquiry/AUTHORS file for the full list of contributors.
+#
+# This is the inquiry/Makefile file; it defines the rules to build the Inquiry
+# microservice daemon and unit tests.
 #
 # This code is released under the GPLv3 License. See the accompanying 
-# inquery/LICENSE.md file or <http://opensource.org/licenses/GPL-3.0> for 
-# complete licensing details.
+# inquery/LICENSE file or <http://opensource.org/licenses/GPL-3.0> for complete
+# licensing details.
 #
 # BY CONTINUING TO USE AND/OR DISTRIBUTE THIS FILE, YOU ACKNOWLEDGE THAT YOU
 # HAVE UNDERSTOOD THESE LICENSE TERMS AND ACCEPT THEM.
