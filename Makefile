@@ -35,8 +35,14 @@ EXE_SRC = $(sort $(shell find $(DIR_SRC)/ -type f -name '*.c'))
 
 
 #
+# The list of test source files.
+#
+TEST_SRC = $(sort $(wildcard $(DIR_TEST)/*.c))
+
+
+#
 # The list of object files for the executable binary generated from the list of
-# source files
+# source files.
 #
 EXE_OBJ = $(patsubst $(DIR_SRC)/%.c, $(DIR_BLD)/%.o, $(LIB_SRC))
 
@@ -73,6 +79,13 @@ $(EXE_BIN): $(EXE_OBJ)
 
 
 #
+# The rule to build the test runner.
+#
+$(TEST_BIN): $(EXE_OBJ) $(TEST_SRC)
+	$(LINK.c) $^ -o $@
+
+
+#
 # The rule to build the objects from source.
 #
 $(DIR_BLD)/%.o: $(DIR_SRC)/%.c | $(DIR_BLD)
@@ -80,7 +93,7 @@ $(DIR_BLD)/%.o: $(DIR_SRC)/%.c | $(DIR_BLD)
 
 
 #
-# The rule to create the build directory
+# The rule to create the build directory.
 #
 $(DIR_BLD):
 	mkdir -p $@ # Add subdirectories as required
@@ -104,6 +117,13 @@ clean:
 #
 run: $(EXE_BIN)
 	./$(EXE_BIN)
+
+
+#
+# The target to run the unit tests.
+#
+test: $(TEST_BIN)
+	./$(TEST_BIN)
 
 
 #
