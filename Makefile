@@ -8,9 +8,9 @@
 #
 # Inquery - India Query RESTful microservice
 # Copyright (c) 2020 Abhishek Chakravarti <abhishek@taranjali.org>. 
-# See the accompanying inquiry/AUTHORS file for the full list of contributors.
+# See the accompanying inquery/AUTHORS file for the full list of contributors.
 #
-# This is the inquiry/Makefile file; it defines the rules to build the Inquiry
+# This is the inquery/Makefile file; it defines the rules to build the Inquery
 # microservice daemon and unit tests.
 #
 # This code is released under the GPLv3 License. See the accompanying 
@@ -30,9 +30,15 @@ DIR_BLD = bld
 
 
 #
-# The directory where the source code kept.
+# The directory where the library source code kept.
 #
-DIR_SRC = src
+DIR_LIB = lib
+
+
+#
+# The directory where the source code for the executable is kept.
+#
+DIR_EXE = exe
 
 
 #
@@ -42,28 +48,40 @@ DIR_TEST = test
 
 
 #
-# The list of source files required to build the executable binary.
+# The list of source files required to build the library.
 #
-EXE_SRC = $(sort $(shell find $(DIR_SRC)/ -type f -name '*.c'))
+SRC_LIB = $(sort $(shell find $(DIR_LIB)/ -type f -name '*.c'))
+
+
+#
+# The list of source files required to build the executable.
+#
+SRC_EXE = $(sort $(wildcard $(DIR_EXE)/*.c))
 
 
 #
 # The list of test source files.
 #
-TEST_SRC = $(sort $(wildcard $(DIR_TEST)/*.c))
+SRC_TEST = $(sort $(wildcard $(DIR_TEST)/*.c))
 
 
 #
 # The list of object files for the executable binary generated from the list of
 # source files.
 #
-EXE_OBJ = $(patsubst $(DIR_SRC)/%.c, $(DIR_BLD)/%.o, $(LIB_SRC))
+OBJ_LIB = $(patsubst $(DIR_LIB)/%.c, $(DIR_BLD)/%.o, $(SRC_LIB))
 
 
 #
 # The executable binary to be built.
 #
-EXE_BIN = bld/inquery
+BIN_EXE = bld/inquery
+
+
+#
+# The test runner binary.
+#
+BIN_TEST = bld/inquery-tests
 
 
 #
@@ -87,21 +105,21 @@ LDFLAGS =
 #
 # The rule to build the executable binary.
 #
-$(EXE_BIN): $(EXE_OBJ)
+$(BIN_EXE): $(OBJ_LIB) $(SRC_EXE)
 	$(LINK.c) $^ -o $@
 
 
 #
 # The rule to build the test runner.
 #
-$(TEST_BIN): $(EXE_OBJ) $(TEST_SRC)
+$(BIN_TEST): $(OBJ_LIB) $(SRC_TEST)
 	$(LINK.c) $^ -o $@
 
 
 #
 # The rule to build the objects from source.
 #
-$(DIR_BLD)/%.o: $(DIR_SRC)/%.c | $(DIR_BLD)
+$(DIR_BLD)/%.o: $(DIR_LIB)/%.c | $(DIR_BLD)
 	$(COMPILE.c) $^ -o $@
 
 
@@ -109,13 +127,13 @@ $(DIR_BLD)/%.o: $(DIR_SRC)/%.c | $(DIR_BLD)
 # The rule to create the build directory.
 #
 $(DIR_BLD):
-	mkdir -p $@ # Add subdirectories as required
+	mkdir -p $@ $@/core
 
 
 #
 # The default build target.
 #
-all: $(EXE_BIN)
+all: $(BIN_EXE) $(BIN_TEST)
 
 
 #
@@ -128,24 +146,24 @@ clean:
 #
 # The target to run the executable binary.
 #
-run: $(EXE_BIN)
-	./$(EXE_BIN)
+run: $(BIN_EXE)
+	./$(BIN_EXE)
 
 
 #
 # The target to run the unit tests.
 #
-test: $(TEST_BIN)
-	./$(TEST_BIN)
+test: $(BIN_TEST)
+	./$(BIN_TEST)
 
 
 #
 # The target to run the Valgrind checks.
 #
-check: $(EXE_BIN)
+check: $(BIN_EXE)
 	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all \
 		--track-origins=yes --log-file=$(DIR_BLD)/valgrind.log   \
-		$(TEST_BIN)
+		$(BIN_EXE)
 
 
 #
