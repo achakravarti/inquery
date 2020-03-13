@@ -6,6 +6,15 @@
 #                     |___|_| |_|\__, |\__,_|\___|_|   \__, |
 #                                   |_|                |___/ 
 #
+# Inquery - India Query RESTful microservice
+# Copyright (c) 2020 Abhishek Chakravarti <abhishek@taranjali.org>. 
+#
+# This code is released under the GPLv3 License. See the accompanying 
+# inquery/LICENSE.md file or <http://opensource.org/licenses/GPL-3.0> for 
+# complete licensing details.
+#
+# BY CONTINUING TO USE AND/OR DISTRIBUTE THIS FILE, YOU ACKNOWLEDGE THAT YOU
+# HAVE UNDERSTOOD THESE LICENSE TERMS AND ACCEPT THEM.
 ################################################################################
 
 
