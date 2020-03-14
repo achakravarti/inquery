@@ -31,6 +31,11 @@
 #include <assert.h>
 
 
+/*******************************************************************************
+ * BRANCH PREDICTION
+ */
+
+
 /*
  * inq_likely() - hint that a predicate is likely to be true
  */
@@ -53,6 +58,11 @@
 #endif
 
 
+/*******************************************************************************
+ * RUNTIME CHECKS
+ */
+
+
 /*
  * inq_assert() - assert that a predicate is true
  */
@@ -65,7 +75,7 @@
         }                                                              \
     } while (0)
 #else
-#   define inq_assert(p) ((void 0)
+#   define inq_assert(p)
 #endif
 
 
@@ -79,6 +89,22 @@
         exit(EXIT_FAILURE);                                           \
     }                                                                 \
 } while (0)
+
+
+/*******************************************************************************
+ * HEAP MEMORY MANAGEMENT
+ */
+
+
+#define inq_heap_init()
+
+#define inq_heap_exit()
+
+extern void *inq_heap_new(size_t sz);
+
+extern void *inq_heap_resize(void *bfr, size_t sz);
+
+extern void inq_heap_free(void **bfr);
 
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
