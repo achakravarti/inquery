@@ -2,6 +2,11 @@
 #define INQUERY_CORE_HEADER_INCLUDED
 
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+
 #if (defined __GNUC__ || defined __clang__)
 #   define inq_likely(p) (__builtin_expect (!!(p), 1))
 #else
@@ -19,8 +24,7 @@
 
 
 #if !(defined NDEBUG)
-#   define inq_assert(p)                                               \
-    do {                                                               \
+#   define inq_assert(p) do {                                          \
         if (inq_unlikely (!(p))) {                                     \
             printf("inq_assert() condition failed: %s [%s, %s, %d]\n", \
                     #p, __func__, __FILE__, __LINE__);                 \
@@ -28,8 +32,17 @@
         }                                                              \
     } while (0)
 #else
-#   define inq_assert(p)
+#   define inq_assert(p) ((void 0)
 #endif
+
+
+#define inq_require(p) do {                                           \
+    if (inq_unlikely (!(p))) {                                        \
+        printf("inq_require() condition failed @ %s() [%s:%d]: %s\n", \
+                __func__, __FILE__, __LINE__, #p);                    \
+        exit(EXIT_FAILURE);                                           \
+    }                                                                 \
+} while (0)
 
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
