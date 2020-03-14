@@ -102,7 +102,7 @@
 
 extern void *inq_heap_new(size_t sz);
 
-extern void *inq_heap_resize(void *bfr, size_t sz);
+extern void inq_heap_resize(void **bfr, size_t sz);
 
 extern void inq_heap_free(void **bfr);
 
