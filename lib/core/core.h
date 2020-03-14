@@ -1,3 +1,27 @@
+/******************************************************************************
+ *                     ___                                   
+ *                    |_ _|_ __   __ _ _   _  ___ _ __ _   _ 
+ *                     | || '_ \ / _` | | | |/ _ \ '__| | | |
+ *                     | || | | | (_| | |_| |  __/ |  | |_| |
+ *                    |___|_| |_|\__, |\__,_|\___|_|   \__, |
+ *                                  |_|                |___/ 
+ *
+ * Inquery - India Query RESTful microservice
+ * Copyright (c) 2020 Abhishek Chakravarti <abhishek@taranjali.org>. 
+ * See the accompanying inquery/AUTHORS file for the full list of contributors.
+ *
+ * This is the inquery/lib/core.h header file; it declares the core interface
+ * on which the Inquery microservice is built.
+ *
+ * This code is released under the GPLv3 License. See the accompanying 
+ * inquery/LICENSE file or <http://opensource.org/licenses/GPL-3.0> for complete
+ * licensing details.
+ *
+ * BY CONTINUING TO USE AND/OR DISTRIBUTE THIS FILE, YOU ACKNOWLEDGE THAT YOU
+ * HAVE UNDERSTOOD THESE LICENSE TERMS AND ACCEPT THEM.
+ ******************************************************************************/
+
+
 #if (!defined INQUERY_CORE_HEADER_INCLUDED)
 #define INQUERY_CORE_HEADER_INCLUDED
 
