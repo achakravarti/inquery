@@ -31,6 +31,9 @@
 #include <assert.h>
 
 
+/*
+ * inq_likely() - hint that a predicate is likely to be true
+ */
 #if (defined __GNUC__ || defined __clang__)
 #   define inq_likely(p) (__builtin_expect (!!(p), 1))
 #else
@@ -39,6 +42,9 @@
 #endif
 
 
+/*
+ * inq_unlikely() - hint that a predicate is unlikely to be true
+ */
 #if (defined __GNUC__ || defined __clang__)
 #   define inq_unlikely(p) (__builtin_expect (!!(p), 0))
 #else
@@ -47,6 +53,9 @@
 #endif
 
 
+/*
+ * inq_assert() - assert that a predicate is true
+ */
 #if !(defined NDEBUG)
 #   define inq_assert(p) do {                                          \
         if (inq_unlikely (!(p))) {                                     \
@@ -60,6 +69,9 @@
 #endif
 
 
+/*
+ * inq_require() - ensure that a predicate is true
+ */
 #define inq_require(p) do {                                           \
     if (inq_unlikely (!(p))) {                                        \
         printf("inq_require() condition failed @ %s() [%s:%d]: %s\n", \
