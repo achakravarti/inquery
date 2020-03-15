@@ -149,10 +149,11 @@ struct inquery_object_vtable {
  * inquery_object_smart - declare smart pointer to object
  */
 #if (defined __GNUC__ || defined __clang__)
-#   define inquery_object_smart __attribute__((cleanup(inquery_object_free)))
+#   define inquery_object_smart \
+            __attribute__((cleanup(inquery_object_free))) inquery_object
 #else
-#   define inquery_object_smart
-#   warning "inquery_object_smart has no effect on non GCC-compatible compilers"
+#   define inquery_object_smart inquery_object
+#   warning "inquery_object_smart leaks memory on non GCC-compatible compilers"
 #endif
 
 
