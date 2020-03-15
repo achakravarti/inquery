@@ -141,7 +141,7 @@ typedef struct inquery_object inquery_object;
  */
 struct inquery_object_vtable {
     void *(*payload_copy)(const void *payload);
-    void (*payload_free)(void **payload);
+    void (*payload_free)(void *payload);
 };
 
 
@@ -159,8 +159,14 @@ struct inquery_object_vtable {
 /*
  * inquery_object_new() - create new object
  */
-extern inquery_object *inquery_object_new(size_t id, void *payload,
+extern inquery_object *inquery_object_new(void *payload,
         const struct inquery_object_vtable *vt);
+
+
+/*
+ * inquery_object_new_noload() - create new object without payload
+ */
+extern inquery_object *inquery_object_new_noload(void);
 
 
 /*
