@@ -165,6 +165,12 @@ check: $(BIN_EXE)
 		--track-origins=yes --log-file=$(DIR_BLD)/valgrind.log   \
 		$(BIN_EXE)
 
+#
+# The target to build the compile database for LLVM using BEAR
+#
+compiledb: clean
+	bear make all
+
 
 #
 # The list of phony targets.
