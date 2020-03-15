@@ -43,7 +43,7 @@
 #   define inq_likely(p) (__builtin_expect (!!(p), 1))
 #else
 #   define inq_likely(p) (p)
-#   warning "inq_likely() has no effect on non GCC-compatible C compilers"
+#   warning "inq_likely() has no effect on non GCC-compatible compilers"
 #endif
 
 
@@ -54,7 +54,7 @@
 #   define inq_unlikely(p) (__builtin_expect (!!(p), 0))
 #else
 #   define inq_unlikely(p) (p)
-#   warning "inq_likely() has no effect on non GCC-compatible C compilers"
+#   warning "inq_likely() has no effect on non GCC-compatible compilers"
 #endif
 
 
@@ -123,6 +123,39 @@ extern void inq_heap_resize(void **bfr, size_t sz);
  * inq_heap_free() - free existing block of heap memory
  */
 extern void inq_heap_free(void **bfr);
+
+
+/*******************************************************************************
+ * OBJECT MODEL
+ */
+
+
+typedef struct inquery_object inquery_object;
+
+
+struct inquery_object_vtable {
+    void *(*payload_copy)(const void *payload);
+    void (*payload_free)(void **payload);
+};
+
+#if (defined __GNUC__ || defined __clang__)
+#   define inquery_object_smart __attribute__((cleanup(inquery_object_free)))
+#else
+#   define inquery_object_smart
+#   warning "inquery_object_smart has no effect on non GCC-compatible compilers"
+#endif
+
+
+extern inquery_object *inquery_object_new(size_t id, void *payload,
+        const struct inquery_object_vtable *vt);
+
+extern inquery_object *inquery_object_copy(const inquery_object *ctx);
+
+extern void inquery_object_free(inquery_object **ctx);
+
+extern const void *inquery_object_payload(const inquery_object *ctx);
+
+extern void *inquery_object_payload_mutable(inquery_object **ctx);
 
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
