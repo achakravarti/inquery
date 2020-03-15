@@ -95,15 +95,33 @@
  * HEAP MEMORY MANAGEMENT
  */
 
-
+/*
+ * inq_heap_init() - initialise heap memory manager
+ */
 #define inq_heap_init()
 
+
+/*
+ * inq_heap_exit() - shut down heap memory manager
+ */
 #define inq_heap_exit()
 
+
+/*
+ * inq_heap_new() - allocate new block of heap memory
+ */
 extern void *inq_heap_new(size_t sz);
 
+
+/*
+ * inq_heap_resize() - resize existing block of heap memory
+ */
 extern void inq_heap_resize(void **bfr, size_t sz);
 
+
+/*
+ * inq_heap_free() - free existing block of heap memory
+ */
 extern void inq_heap_free(void **bfr);
 
 
