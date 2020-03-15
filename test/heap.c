@@ -35,6 +35,7 @@ static void test_resize(void)
 
     bfr[1] = 666;
     inquery_require (bfr[1] == 666);
+    inquery_heap_free((void **) &bfr);
     
     printf("OK\n");
 }
