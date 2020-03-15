@@ -3,64 +3,64 @@
 
 
 /*
- * test_new() - inq_heap_new() test case
+ * test_new() - inquery_heap_new() test case
  */
 static void test_new(void)
 {
-    printf("inq_heap_new() dynamically allocates memory on the heap...");
+    printf("inquery_heap_new() dynamically allocates memory on the heap...");
 
-    int *bfr = inq_heap_new(sizeof *bfr);
+    int *bfr = inquery_heap_new(sizeof *bfr);
     *bfr = 555;
 
-    inq_require (*bfr == 555);
-    inq_heap_free((void **) &bfr);
+    inquery_require (*bfr == 555);
+    inquery_heap_free((void **) &bfr);
 
     printf("OK\n");
 }
 
 
 /*
- * test_resize() - inq_heap_resize() test case
+ * test_resize() - inquery_heap_resize() test case
  */
 static void test_resize(void)
 {
-    printf("inq_heap_resize() resizes an existing heap memory buffer...");
+    printf("inquery_heap_resize() resizes an existing heap memory buffer...");
 
-    int *bfr = inq_heap_new(sizeof *bfr);
+    int *bfr = inquery_heap_new(sizeof *bfr);
     *bfr = 555;
-    inq_require (*bfr == 555);
+    inquery_require (*bfr == 555);
 
-    inq_heap_resize((void **) &bfr, sizeof *bfr * 2);
-    inq_require (*bfr == 555);
+    inquery_heap_resize((void **) &bfr, sizeof *bfr * 2);
+    inquery_require (*bfr == 555);
 
     bfr[1] = 666;
-    inq_require (bfr[1] == 666);
+    inquery_require (bfr[1] == 666);
     
     printf("OK\n");
 }
 
 
 /*
- * test_free() - inq_heap_free() test case
+ * test_free() - inquery_heap_free() test case
  */
 static void test_free(void)
 {
-    printf("inq_heap_free() releases an existing heap memory buffer...");
+    printf("inquery_heap_free() releases an existing heap memory buffer...");
 
-    int *bfr = inq_heap_new(sizeof *bfr);
-    inq_require (bfr);
+    int *bfr = inquery_heap_new(sizeof *bfr);
+    inquery_require (bfr);
 
-    inq_heap_free((void **) &bfr);
-    inq_require (!bfr);
+    inquery_heap_free((void **) &bfr);
+    inquery_require (!bfr);
     
     printf("OK\n");
 }
 
-
+  
 /*
- * inq_test_suite_heap() - heap memory interface test suite
+ * inquery_test_suite_heap() - heap memory interface test suite
  */
-extern void inq_test_suite_heap(void)
+extern void inquery_test_suite_heap(void)
 {
     printf("===============================================================\n");
     printf("Starting heap interface test suite...\n\n");

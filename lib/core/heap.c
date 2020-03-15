@@ -27,14 +27,14 @@
 
 
 /*
- * inq_heap_new() - allocate new block of heap memory
+ * inquery_heap_new() - allocate new block of heap memory
  */
-extern void *inq_heap_new(size_t sz)
+extern void *inquery_heap_new(size_t sz)
 {
     void *bfr;
 
-    inq_assert (sz);
-    inq_require (bfr  = malloc(sz));
+    inquery_assert (sz);
+    inquery_require (bfr = malloc(sz));
     
     memset(bfr, 0, sz);
     return bfr;
@@ -42,21 +42,21 @@ extern void *inq_heap_new(size_t sz)
 
 
 /*
- * inq_heap_resize() - resize existing block of heap memory
+ * inquery_heap_resize() - resize existing block of heap memory
  */
-extern void inq_heap_resize(void **bfr, size_t sz)
+extern void inquery_heap_resize(void **bfr, size_t sz)
 {
-    inq_assert (bfr && *bfr && sz);
-    inq_require (*bfr = realloc(*bfr, sz));
+    inquery_assert (bfr && *bfr && sz);
+    inquery_require (*bfr = realloc(*bfr, sz));
 }
 
 
 /*
- * inq_heap_free() - free existing block of heap memory
+ * inquery_heap_free() - free existing block of heap memory
  */
-extern void inq_heap_free(void **bfr)
+extern void inquery_heap_free(void **bfr)
 {
-    if (inq_likely (bfr && *bfr)) {
+    if (inquery_likely (bfr && *bfr)) {
         free(*bfr);
         *bfr = NULL;
     }
