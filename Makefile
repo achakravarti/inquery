@@ -160,9 +160,12 @@ test: $(BIN_TEST)
 #
 # The target to run the Valgrind checks.
 #
-check: $(BIN_EXE)
+check: $(BIN_TEST) $(BIN_EXE)
 	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all \
-		--track-origins=yes --log-file=$(DIR_BLD)/valgrind.log   \
+		--track-origins=yes --log-file=$(BIN_TEST).vglog         \
+		$(BIN_TEST)
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all \
+		--track-origins=yes --log-file=$(BIN_EXE).vglog          \
 		$(BIN_EXE)
 
 #

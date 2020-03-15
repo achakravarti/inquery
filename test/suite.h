@@ -2,9 +2,16 @@
 #define INQUERY_TEST_SUITE_HEADER
 
 /*
- * inq_test_suite_heap() - heap memory interface test suite
+ * inquery_test_suite_heap() - heap memory interface test suite
  */
-extern void inq_test_suite_heap(void);
+extern void inquery_test_suite_heap(void);
+
+
+/*
+ * inquery_test_suite_object() - object model interface test suite
+ */
+extern void inquery_test_suite_object(void);
+
 
 #endif /* INQUERY_TEST_SUITE_HEADER */
 

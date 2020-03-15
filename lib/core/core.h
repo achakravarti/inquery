@@ -37,24 +37,24 @@
 
 
 /*
- * inq_likely() - hint that a predicate is likely to be true
+ * inquery_likely() - hint that a predicate is likely to be true
  */
 #if (defined __GNUC__ || defined __clang__)
-#   define inq_likely(p) (__builtin_expect (!!(p), 1))
+#   define inquery_likely(p) (__builtin_expect (!!(p), 1))
 #else
-#   define inq_likely(p) (p)
-#   warning "inq_likely() has no effect on non GCC-compatible C compilers"
+#   define inquery_likely(p) (p)
+#   warning "inquery_likely() has no effect on non GCC-compatible compilers"
 #endif
 
 
 /*
- * inq_unlikely() - hint that a predicate is unlikely to be true
+ * inquery_unlikely() - hint that a predicate is unlikely to be true
  */
 #if (defined __GNUC__ || defined __clang__)
-#   define inq_unlikely(p) (__builtin_expect (!!(p), 0))
+#   define inquery_unlikely(p) (__builtin_expect (!!(p), 0))
 #else
-#   define inq_unlikely(p) (p)
-#   warning "inq_likely() has no effect on non GCC-compatible C compilers"
+#   define inquery_unlikely(p) (p)
+#   warning "inquery_likely() has no effect on non GCC-compatible compilers"
 #endif
 
 
@@ -64,30 +64,30 @@
 
 
 /*
- * inq_assert() - assert that a predicate is true
+ * inquery_assert() - assert that a predicate is true
  */
 #if !(defined NDEBUG)
-#   define inq_assert(p) do {                                          \
-        if (inq_unlikely (!(p))) {                                     \
-            printf("inq_assert() condition failed: %s [%s, %s, %d]\n", \
-                    #p, __func__, __FILE__, __LINE__);                 \
-            abort();                                                   \
-        }                                                              \
+#   define inquery_assert(p) do {                                          \
+        if (inquery_unlikely (!(p))) {                                     \
+            printf("inquery_assert() condition failed: %s [%s, %s, %d]\n", \
+                    #p, __func__, __FILE__, __LINE__);                     \
+            abort();                                                       \
+        }                                                                  \
     } while (0)
 #else
-#   define inq_assert(p)
+#   define inquery_assert(p)
 #endif
 
 
 /*
- * inq_require() - ensure that a predicate is true
+ * inquery_require() - ensure that a predicate is true
  */
-#define inq_require(p) do {                                           \
-    if (inq_unlikely (!(p))) {                                        \
-        printf("inq_require() condition failed @ %s() [%s:%d]: %s\n", \
-                __func__, __FILE__, __LINE__, #p);                    \
-        exit(EXIT_FAILURE);                                           \
-    }                                                                 \
+#define inquery_require(p) do {                                           \
+    if (inquery_unlikely (!(p))) {                                        \
+        printf("inquery_require() condition failed @ %s() [%s:%d]: %s\n", \
+                __func__, __FILE__, __LINE__, #p);                        \
+        exit(EXIT_FAILURE);                                               \
+    }                                                                     \
 } while (0)
 
 
@@ -96,33 +96,102 @@
  */
 
 /*
- * inq_heap_init() - initialise heap memory manager
+ * inquery_heap_init() - initialise heap memory manager
  */
-#define inq_heap_init()
+#define inquery_heap_init()
 
 
 /*
- * inq_heap_exit() - shut down heap memory manager
+ * inquery_heap_exit() - shut down heap memory manager
  */
-#define inq_heap_exit()
+#define inquery_heap_exit()
 
 
 /*
- * inq_heap_new() - allocate new block of heap memory
+ * inquery_heap_new() - allocate new block of heap memory
  */
-extern void *inq_heap_new(size_t sz);
+extern void *inquery_heap_new(size_t sz);
 
 
 /*
- * inq_heap_resize() - resize existing block of heap memory
+ * inquery_heap_resize() - resize existing block of heap memory
  */
-extern void inq_heap_resize(void **bfr, size_t sz);
+extern void inquery_heap_resize(void **bfr, size_t sz);
 
 
 /*
- * inq_heap_free() - free existing block of heap memory
+ * inquery_heap_free() - free existing block of heap memory
  */
-extern void inq_heap_free(void **bfr);
+extern void inquery_heap_free(void **bfr);
+
+
+/*******************************************************************************
+ * OBJECT MODEL
+ */
+
+
+/*
+ * inquery_object - reference counted object
+ */
+typedef struct inquery_object inquery_object;
+
+
+/*
+ * struct inquery_object_vtable - object payload v-table
+ */
+struct inquery_object_vtable {
+    void *(*payload_copy)(const void *payload);
+    void (*payload_free)(void *payload);
+};
+
+
+/*
+ * inquery_object_smart - declare smart pointer to object
+ */
+#if (defined __GNUC__ || defined __clang__)
+#   define inquery_object_smart \
+            __attribute__((cleanup(inquery_object_free))) inquery_object
+#else
+#   define inquery_object_smart inquery_object
+#   warning "inquery_object_smart leaks memory on non GCC-compatible compilers"
+#endif
+
+
+/*
+ * inquery_object_new() - create new object
+ */
+extern inquery_object *inquery_object_new(void *payload,
+        const struct inquery_object_vtable *vt);
+
+
+/*
+ * inquery_object_new_noload() - create new object without payload
+ */
+extern inquery_object *inquery_object_new_noload(void);
+
+
+/*
+ * inquery_object_copy() - copy existing object
+ */
+extern inquery_object *inquery_object_copy(const inquery_object *ctx);
+
+
+/*
+ * inquery_object_free() - free object from heap memory
+ */
+extern void inquery_object_free(inquery_object **ctx);
+
+
+/*
+ * inquery_object_payload() - get constant handle to object payload
+ */
+extern const void *inquery_object_payload(const inquery_object *ctx);
+
+
+/*
+ * inquery_object_payload_mutable() - get mutable handle to object payload
+ */
+extern void *inquery_object_payload_mutable(inquery_object **ctx);
 
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
