@@ -56,7 +56,7 @@ static void test_free(void)
     printf("OK\n");
 }
 
-  
+   
 /*
  * inquery_test_suite_heap() - heap memory interface test suite
  */

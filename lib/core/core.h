@@ -130,15 +130,24 @@ extern void inquery_heap_free(void **bfr);
  */
 
 
+/*
+ * inquery_object - reference counted object
+ */
 typedef struct inquery_object inquery_object;
 
 
+/*
+ * struct inquery_object_vtable - object payload v-table
+ */
 struct inquery_object_vtable {
     void *(*payload_copy)(const void *payload);
     void (*payload_free)(void **payload);
 };
 
 
+/*
+ * inquery_object_smart - declare smart pointer to object
+ */
 #if (defined __GNUC__ || defined __clang__)
 #   define inquery_object_smart __attribute__((cleanup(inquery_object_free)))
 #else
@@ -147,15 +156,34 @@ struct inquery_object_vtable {
 #endif
 
 
+/*
+ * inquery_object_new() - create new object
+ */
 extern inquery_object *inquery_object_new(size_t id, void *payload,
         const struct inquery_object_vtable *vt);
 
+
+/*
+ * inquery_object_copy() - copy existing object
+ */
 extern inquery_object *inquery_object_copy(const inquery_object *ctx);
 
+
+/*
+ * inquery_object_free() - free object from heap memory
+ */
 extern void inquery_object_free(inquery_object **ctx);
 
+
+/*
+ * inquery_object_payload() - get constant handle to object payload
+ */
 extern const void *inquery_object_payload(const inquery_object *ctx);
 
+
+/*
+ * inquery_object_payload_mutable() - get mutable handle to object payload
+ */
 extern void *inquery_object_payload_mutable(inquery_object **ctx);
 
 
