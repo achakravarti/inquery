@@ -126,6 +126,39 @@ extern void inquery_heap_free(void **bfr);
 
 
 /*******************************************************************************
+ * STRING
+ */
+
+typedef char inquery_string;
+
+extern inquery_string *inquery_string_new(const char *cstr);
+
+extern inquery_string *inquery_string_new_empty(void);
+
+extern inquery_string *inquery_string_copy(const inquery_string *ctx);
+
+extern size_t inquery_string_len(const inquery_string *ctx);
+
+extern size_t inquery_string_sz(const inquery_string *ctx);
+
+extern int inquery_string_cmp(const inquery_string *lhs, 
+        const inquery_string *rhs);
+
+extern inquery_string *inquery_string_add(const inquery_string *ctx, 
+        const inquery_string *add);
+
+extern size_t inquery_string_find(const inquery_string *haystack, 
+        const inquery_string *needle);
+
+extern inquery_string *inquery_string_replace(const inquery_string *haystack, 
+        const inquery_string *needle, const inquery_string *replace);
+
+extern inquery_string *inquery_string_replace_first(
+        const inquery_string *haystack, const inquery_string *needle,
+        const inquery_string *replace);
+
+
+/*******************************************************************************
  * OBJECT MODEL
  */
 
