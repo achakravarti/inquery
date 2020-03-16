@@ -26,6 +26,7 @@
 #define INQUERY_CORE_HEADER_INCLUDED
 
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -137,12 +138,38 @@ extern inquery_string *inquery_string_new_empty(void);
 
 extern inquery_string *inquery_string_copy(const inquery_string *ctx);
 
+extern void inquery_string_free(inquery_string **ctx);
+
 extern size_t inquery_string_len(const inquery_string *ctx);
 
 extern size_t inquery_string_sz(const inquery_string *ctx);
 
 extern int inquery_string_cmp(const inquery_string *lhs, 
         const inquery_string *rhs);
+
+inline bool inquery_string_lt(const inquery_string *lhs,
+        const inquery_string *rhs)
+{
+    inquery_assert (lhs && rhs);
+
+    return inquery_string_cmp(lhs, rhs) < 0;
+}
+
+inline bool inquery_string_eq(const inquery_string *lhs,
+        const inquery_string *rhs)
+{
+    inquery_assert (lhs && rhs);
+
+    return !inquery_string_cmp(lhs, rhs);
+}
+
+inline bool inquery_string_gt(const inquery_string *lhs,
+        const inquery_string *rhs)
+{
+    inquery_assert (lhs && rhs);
+
+    return inquery_string_cmp(lhs, rhs) > 0;
+}
 
 extern inquery_string *inquery_string_add(const inquery_string *ctx, 
         const inquery_string *add);
