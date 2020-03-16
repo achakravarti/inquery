@@ -132,6 +132,14 @@ extern void inquery_heap_free(void **bfr);
 
 typedef char inquery_string;
 
+#if (defined __GNUC__ || defined __clang__)
+#   define inquery_string_smart \
+            __attribute__((cleanup(inquery_string_free))) inquery_string
+#else
+#   define inquery_string_smart inquery_string
+#   warning "inquery_string_smart leaks memory on non GCC-compatible compilers"
+#endif
+
 extern inquery_string *inquery_string_new(const char *cstr);
 
 extern inquery_string *inquery_string_new_empty(void);
@@ -171,8 +179,7 @@ inline bool inquery_string_gt(const inquery_string *lhs,
     return inquery_string_cmp(lhs, rhs) > 0;
 }
 
-extern inquery_string *inquery_string_add(const inquery_string *ctx, 
-        const inquery_string *add);
+extern void inquery_string_add(inquery_string **ctx, const inquery_string *add);
 
 extern size_t inquery_string_find(const inquery_string *haystack, 
         const inquery_string *needle);

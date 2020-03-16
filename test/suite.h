@@ -8,6 +8,12 @@ extern void inquery_test_suite_heap(void);
 
 
 /*
+ * inquery_test_suite_string) - string interface test suite
+ */
+extern void inquery_test_suite_string(void);
+
+
+/*
  * inquery_test_suite_object() - object model interface test suite
  */
 extern void inquery_test_suite_object(void);

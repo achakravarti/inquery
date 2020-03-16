@@ -85,7 +85,7 @@ extern size_t inquery_string_sz(const inquery_string *ctx)
 {
     inquery_assert (ctx);
 
-    return sdslen((const sds) ctx);
+    return sdslen((const sds) ctx) + 1;
 }
 
 
@@ -110,13 +110,13 @@ extern inline bool inquery_string_gt(const inquery_string *lhs,
         const inquery_string *rhs);
 
 
-extern inquery_string *inquery_string_add(const inquery_string *ctx, 
-        const inquery_string *add)
+extern void inquery_string_add(inquery_string **ctx, const inquery_string *add)
 {
-    inquery_assert (ctx && add);
+    inquery_assert (ctx && *ctx && add);
 
-    sds cp = sdsnew(ctx);
-    return sdscat(cp, add);
+    sds cp = sdsnew(*ctx);
+    sdsfree(*ctx);
+    *ctx = sdscat(cp, add);
 }
 
 
