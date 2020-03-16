@@ -127,7 +127,7 @@ $(DIR_BLD)/%.o: $(DIR_LIB)/%.c | $(DIR_BLD)
 # The rule to create the build directory.
 #
 $(DIR_BLD):
-	mkdir -p $@ $@/core
+	mkdir -p $@ $@/core $@/sds
 
 
 #
