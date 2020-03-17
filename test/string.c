@@ -14,6 +14,7 @@ static void test_new_empty_1(void)
 }
 
 
+
 static void test_new_1(void)
 {
     printf("inquery_string_new() can create an ASCII string...");
@@ -395,6 +396,7 @@ static void test_find_9(void)
 
     printf("...OK\n");
 }
+
 
 extern void inquery_test_suite_string(void)
 {

@@ -181,15 +181,14 @@ inline bool inquery_string_gt(const inquery_string *lhs,
 
 extern void inquery_string_add(inquery_string **ctx, const inquery_string *add);
 
-extern size_t inquery_string_find(const inquery_string *haystack, 
-        const inquery_string *needle);
+extern size_t inquery_string_find(const inquery_string *ctx, 
+        const inquery_string *what);
 
-extern inquery_string *inquery_string_replace(const inquery_string *haystack, 
-        const inquery_string *needle, const inquery_string *replace);
+extern void inquery_string_replace(inquery_string **ctx, 
+        const inquery_string *what, const inquery_string *with);
 
-extern inquery_string *inquery_string_replace_first(
-        const inquery_string *haystack, const inquery_string *needle,
-        const inquery_string *replace);
+extern void inquery_string_replace_first(inquery_string **ctx, 
+        const inquery_string *what, const inquery_string *with);
 
 
 /*******************************************************************************

@@ -3,27 +3,27 @@
 #include "core.h"
 
 
-static inquery_string *replace_first(const inquery_string *h, 
-        const inquery_string *n, const inquery_string *r)
+static void replace_first(inquery_string **h, const inquery_string *n, 
+        const inquery_string *r)
 {
-    char *pos = strstr(h, n);
+    char *pos = strstr(*h, n);
     if (!pos)
-        return inquery_string_copy(h);
+        return;
 
-    const size_t hsz = sdslen((const sds) h);
+    const size_t hsz = sdslen((const sds) *h);
     const size_t nsz = sdslen((const sds) n);
     const size_t rsz = sdslen((const sds) r);
     const size_t diff = rsz - nsz;
 
     inquery_string *s = inquery_heap_new(hsz + diff + 1);
-
-    size_t shifts = pos - h;
-    memcpy(s, h, shifts);
+    size_t shifts = pos - *h;
+    memcpy(s, *h, shifts);
     memcpy(s + shifts, r, rsz);
     memcpy(s + shifts + rsz, pos + nsz, hsz - shifts - nsz);
-
     s[hsz + diff] = '\0';
-    return s;
+
+    inquery_string_free(h);
+    *h = s;
 }
 
 extern inquery_string *inquery_string_new(const char *cstr)
@@ -120,49 +120,45 @@ extern void inquery_string_add(inquery_string **ctx, const inquery_string *add)
 }
 
 
-extern size_t inquery_string_find(const inquery_string *haystack, 
-        const inquery_string *needle)
+extern size_t inquery_string_find(const inquery_string *ctx, 
+        const inquery_string *what)
 {
-    inquery_assert (haystack && needle);
+    inquery_assert (ctx && what);
 
-    inquery_string *pos = strstr(haystack, needle);
-    return pos ? inquery_string_len(haystack) - inquery_string_len(pos) + 1 : 0;
+    inquery_string *pos = strstr(ctx, what);
+    return pos ? inquery_string_len(ctx) - inquery_string_len(pos) + 1 : 0;
 }
 
 
-extern inquery_string *inquery_string_replace(const inquery_string *haystack, 
-        const inquery_string *needle, const inquery_string *replace)
+extern void inquery_string_replace(inquery_string **ctx, 
+        const inquery_string *what, const inquery_string *with)
 {
-    inquery_assert(haystack && replace && needle && *needle);
+    inquery_assert(ctx && what && *what && with);
 
-    register inquery_string *r;
-    if (inquery_likely (!strstr(replace, needle))) {
-        r = replace_first(haystack, needle, replace);
-        while (strstr(r, needle))
-            r = replace_first(r, needle, replace);
+    if (inquery_likely (!strstr(with, what))) {
+        replace_first(ctx, what, with);
+        while (strstr(*ctx, what))
+            replace_first(ctx, what, with);
 
-        return r;
+        return;
     }
 
     const char placeholder[] = { 0x1, 0x0 };
-    r = replace_first(haystack, needle, placeholder);
-    while (strstr(r, needle))
-        r = replace_first(r, needle, placeholder);
+    replace_first(ctx, what, placeholder);
+    while (strstr(*ctx, what))
+        replace_first(ctx, what, placeholder);
 
-    r = replace_first(r, placeholder, replace);
-    while (strstr(r, placeholder))
-        r = replace_first(r, placeholder, replace);
-
-    return r;
+    replace_first(ctx, placeholder, with);
+    while (strstr(*ctx, placeholder))
+        replace_first(ctx, placeholder, with);
 }
 
 
-extern inquery_string *inquery_string_replace_first(
-        const inquery_string *haystack, const inquery_string *needle,
-        const inquery_string *replace)
+extern void inquery_string_replace_first(inquery_string **ctx, 
+        const inquery_string *what, const inquery_string *with)
 {
-    inquery_assert(haystack && needle && *needle && replace);
+    inquery_assert(ctx && what && *what && with);
 
-    return replace_first(haystack, needle, replace);
+    replace_first(ctx, what, with);
 }
 
