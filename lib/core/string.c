@@ -10,9 +10,9 @@ static void replace_first(inquery_string **h, const inquery_string *n,
     if (!pos)
         return;
 
-    const size_t hsz = sdslen((const sds) *h);
-    const size_t nsz = sdslen((const sds) n);
-    const size_t rsz = sdslen((const sds) r);
+    const size_t hsz = strlen(*h);
+    const size_t nsz = strlen(n);
+    const size_t rsz = strlen(r);
     const size_t diff = rsz - nsz;
 
     inquery_string *s = inquery_heap_new(hsz + diff + 1);
@@ -28,10 +28,13 @@ static void replace_first(inquery_string **h, const inquery_string *n,
 
 extern inquery_string *inquery_string_new(const char *cstr)
 {
-    inquery_assert (cstr && *cstr);
+    inquery_assert (cstr);
 
-    char *ctx = sdsnew(cstr);
-    inquery_require (ctx);
+    size_t len = strlen(cstr);
+    char *ctx = inquery_heap_new(len + 1);
+
+    strncpy(ctx, cstr, len);
+    ctx[len] = '\0';
 
     return ctx;
 }
@@ -39,10 +42,7 @@ extern inquery_string *inquery_string_new(const char *cstr)
 
 extern inquery_string *inquery_string_new_empty(void)
 {
-    char *ctx = sdsempty();
-    inquery_require (ctx);
-
-    return ctx;
+    return inquery_string_new("");
 }
 
 
@@ -50,20 +50,13 @@ extern inquery_string *inquery_string_copy(const inquery_string *ctx)
 {
     inquery_assert (ctx);
 
-    sds cp = sdsdup((const sds) ctx);
-    inquery_require (cp);
-
-    return cp;
+    return inquery_string_new(ctx);
 }
 
 
 extern void inquery_string_free(inquery_string **ctx)
 {
-    if (inquery_likely (ctx && *ctx)) {
-        sdsfree(*ctx);
-        *ctx = NULL;
-    }
-            
+    inquery_heap_free((void **) ctx);
 }
 
 
@@ -85,7 +78,7 @@ extern size_t inquery_string_sz(const inquery_string *ctx)
 {
     inquery_assert (ctx);
 
-    return sdslen((const sds) ctx) + 1;
+    return strlen(ctx) + 1;
 }
 
 
@@ -94,7 +87,7 @@ extern int inquery_string_cmp(const inquery_string *lhs,
 {
     inquery_assert (lhs && rhs);
 
-    return sdscmp((const sds) lhs, (const sds) rhs);
+    return strcmp(lhs, rhs);
 }
 
 
@@ -114,9 +107,19 @@ extern void inquery_string_add(inquery_string **ctx, const inquery_string *add)
 {
     inquery_assert (ctx && *ctx && add);
 
-    sds cp = sdsnew(*ctx);
-    sdsfree(*ctx);
-    *ctx = sdscat(cp, add);
+    inquery_string *oldstr = *ctx;
+  
+    size_t oldlen = strlen(oldstr);
+    size_t addlen = strlen(add);
+    size_t newlen = oldlen + addlen;
+
+    inquery_string *newstr = inquery_heap_new(newlen + 1);
+    strncpy(newstr, oldstr, oldlen);
+    strncpy(newstr + oldlen, add, addlen);
+    newstr[newlen] = '\0';
+
+    inquery_heap_free((void **) ctx);
+    *ctx = newstr;
 }
 
 
@@ -130,10 +133,27 @@ extern size_t inquery_string_find(const inquery_string *ctx,
 }
 
 
+extern size_t inquery_string_count(const inquery_string *ctx,
+        const inquery_string *what)
+{
+    inquery_assert (ctx && what);
+
+    size_t count = 0;
+    const char *itr = ctx;
+
+    while ((itr = strstr(itr, what))) {
+        count++;
+        itr++;
+    }
+
+    return count;
+}
+
+
 extern void inquery_string_replace(inquery_string **ctx, 
         const inquery_string *what, const inquery_string *with)
 {
-    inquery_assert(ctx && what && *what && with);
+    inquery_assert(ctx && *ctx && what && *what && with);
 
     if (inquery_likely (!strstr(with, what))) {
         replace_first(ctx, what, with);
@@ -157,8 +177,8 @@ extern void inquery_string_replace(inquery_string **ctx,
 extern void inquery_string_replace_first(inquery_string **ctx, 
         const inquery_string *what, const inquery_string *with)
 {
-    inquery_assert(ctx && what && *what && with);
-
-    replace_first(ctx, what, with);
+    inquery_assert(ctx && *ctx && what && *what && with);
+   
+    replace_first(ctx, what, with); 
 }
 

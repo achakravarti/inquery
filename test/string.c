@@ -403,7 +403,7 @@ static void inquery_string_replace_first_test_1(void)
     printf("inquery_string_replace_first() replaces an ASCII character with a null"
             " character");
 
-    inquery_string *test = inquery_string_new("Hello, world!");
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
     inquery_string_replace_first(&test, "!", "");
     inquery_require (!strcmp(test, "Hello, world"));
 
@@ -416,7 +416,7 @@ static void inquery_string_replace_first_test_2(void)
     printf("inquery_string_replace_first() replaces a Unicode character with a"
             " null character");
 
-    inquery_string *test = inquery_string_new("Привет, мир!");
+    inquery_string_smart *test = inquery_string_new("Привет, мир!");
     inquery_string_replace_first(&test, "т", "");
     inquery_require (!strcmp(test, "Приве, мир!"));
 
@@ -429,11 +429,11 @@ static void inquery_string_replace_first_test_3(void)
     printf("inquery_string_replace_first() replaces only the first instance in an"
             " ASCII string");
 
-    inquery_string *test = inquery_string_new("Hello, world!");
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
     inquery_string_replace_first(&test, "l", "y");
     inquery_require (!strcmp(test, "Heylo, world!"));
     
-    printf("OK");
+    printf("...OK\n");
 }
 
 
@@ -442,7 +442,7 @@ static void inquery_string_replace_first_test_4(void)
     printf("inquery_string_replace_first() replaces only the first instance in a"
             " Unicode string");
 
-    inquery_string *test = inquery_string_new("Привет, мир!");
+    inquery_string_smart *test = inquery_string_new("Привет, мир!");
     inquery_string_replace_first(&test, "р", "r");
     inquery_require (!strcmp(test, "Пrивет, мир!"));
     
@@ -454,11 +454,11 @@ static void inquery_string_replace_first_test_5(void)
 {
     printf("inquery_string_replace_first() replaces an ASCII substring");
 
-    inquery_string *test = inquery_string_new("Hello, world!");
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
     inquery_string_replace_first(&test, "world", "moon");
     inquery_require (!strcmp(test, "Hello, moon!"));
 
-    printf("OK");
+    printf("...OK\n");
 }
 
 
