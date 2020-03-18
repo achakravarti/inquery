@@ -242,6 +242,13 @@ extern size_t inquery_string_find(const inquery_string *ctx,
 
 
 /*
+ * inquery_string_count() - count all occurrences of substring
+ */
+extern size_t inquery_string_count(const inquery_string *ctx,
+        const inquery_string *what);
+
+
+/*
  * inquery_string_replace() - replace all occurrences of substring
  */
 extern void inquery_string_replace(inquery_string **ctx, 

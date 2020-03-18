@@ -3,7 +3,10 @@
 #include "suite.h"
 
 
-static void test_new_empty_1(void)
+/*
+ * new_empty_1() - test case #1 for inquery_string_new_empty()
+ */
+static void new_empty_1(void)
 {
     printf("inquery_string_new_empty() can create an empty string...");
 
@@ -14,8 +17,10 @@ static void test_new_empty_1(void)
 }
 
 
-
-static void test_new_1(void)
+/*
+ * new_1() - test case #1 for inquery_string_new()
+ */
+static void new_1(void)
 {
     printf("inquery_string_new() can create an ASCII string...");
 
@@ -27,7 +32,10 @@ static void test_new_1(void)
 }
 
 
-static void test_new_2(void)
+/*
+ * new_2() - test case #2 for inquery_string_new()
+ */
+static void new_2(void)
 {
     printf("inquery_string_new() can create a Unicode string...");
 
@@ -38,7 +46,11 @@ static void test_new_2(void)
     printf("OK\n");
 }
 
-static void test_copy_1(void)
+
+/*
+ * copy_1() - test case #1 for inquery_string_copy()
+ */
+static void copy_1(void)
 {
     printf("inquery_string_copy() can copy an empty string...");
 
@@ -50,7 +62,10 @@ static void test_copy_1(void)
 }
 
 
-static void test_copy_2(void)
+/*
+ * copy_2() - test case #2 for inquery_string_copy()
+ */
+static void copy_2(void)
 {
     printf("inquery_string_copy() can copy an ASCII string...");
 
@@ -63,7 +78,10 @@ static void test_copy_2(void)
 }
 
 
-static void test_copy_3(void)
+/*
+ * copy_3() - test case #3 for inquery_string_copy()
+ */
+static void copy_3(void)
 {
     printf("inquery_string_copy() can copy a Unicode string...");
 
@@ -76,7 +94,10 @@ static void test_copy_3(void)
 }
 
 
-static void test_len_1(void)
+/*
+ * len_1() - test case #1 for inquery_string_len()
+ */
+static void len_1(void)
 {
     printf("inquery_string_len() reports 0 for a null string...");
 
@@ -87,7 +108,10 @@ static void test_len_1(void)
 }
 
 
-static void test_len_2(void)
+/*
+ * len_2() - test case #2 for inquery_string_len()
+ */
+static void len_2(void)
 {
     printf("inquery_string_len() reports the length of an ASCII string...");
 
@@ -98,7 +122,10 @@ static void test_len_2(void)
 }
 
 
-static void test_len_3(void)
+/*
+ * len_3() - test case #3 for inquery_string_len()
+ */
+static void len_3(void)
 {
     printf("inquery_string_len() reports the length of a Unicode string...");
 
@@ -109,7 +136,10 @@ static void test_len_3(void)
 }
 
 
-static void test_sz_1(void)
+/*
+ * sz_1() - test case #1 for inquery_string_sz()
+ */
+static void sz_1(void)
 {
     printf("inquery_string_sz() reports 1 for a null string...");
 
@@ -120,7 +150,10 @@ static void test_sz_1(void)
 }
 
 
-static void test_sz_2(void)
+/*
+ * sz_2() - test case #2 for inquery_string_sz()
+ */
+static void sz_2(void)
 {
     printf("inquery_string_sz() reports the size of an ASCII string...");
 
@@ -132,7 +165,10 @@ static void test_sz_2(void)
 }
 
 
-static void test_sz_3(void)
+/*
+ * sz_3() - test case #3 for inquery_string_sz()
+ */
+static void sz_3(void)
 {
     printf("inquery_string_sz() reports the size of a Unicode string...");
 
@@ -144,7 +180,10 @@ static void test_sz_3(void)
 }
 
 
-static void test_cmp_1(void)
+/*
+ * cmp_1() - test case #1 for inquery_string_cmp()
+ */
+static void cmp_1(void)
 {
     printf("inquery_string_cmp() detects two equal null strings...");
 
@@ -156,7 +195,10 @@ static void test_cmp_1(void)
 }
 
 
-static void test_cmp_2(void)
+/*
+ * cmp_2() - test case #2 for inquery_string_cmp()
+ */
+static void cmp_2(void)
 {
     printf("inquery_string_cmp() detects two equal ASCII strings...");
 
@@ -168,7 +210,10 @@ static void test_cmp_2(void)
 }
 
 
-static void test_cmp_3(void)
+/*
+ * cmp_3() - test case #3 for inquery_string_cmp()
+ */
+static void cmp_3(void)
 {
     printf("inquery_string_cmp() detects two equal Unicode strings...");
 
@@ -179,7 +224,11 @@ static void test_cmp_3(void)
     printf("OK\n");
 }
 
-static void test_cmp_4(void)
+
+/*
+ * cmp_4() - test case #4 for inquery_string_cmp()
+ */
+static void cmp_4(void)
 {
     printf("inquery_string_cmp() detects two unequal ASCII strings...");
 
@@ -191,7 +240,10 @@ static void test_cmp_4(void)
 }
 
 
-static void test_cmp_5(void)
+/*
+ * cmp_5() - test case #5 for inquery_string_cmp()
+ */
+static void cmp_5(void)
 {
     printf("inquery_string_cmp() detects two unequal Unicode strings...");
 
@@ -203,7 +255,10 @@ static void test_cmp_5(void)
 }
 
 
-static void test_cmp_6(void)
+/*
+ * cmp_6() - test case #6 for inquery_string_cmp()
+ */
+static void cmp_6(void)
 {
     printf("inquery_string_cmp() detects a lexicographically smaller ASCII"
             " string...");
@@ -216,7 +271,10 @@ static void test_cmp_6(void)
 }
 
 
-static void test_cmp_7(void)
+/*
+ * cmp_7() - test case #7 for inquery_string_cmp()
+ */
+static void cmp_7(void)
 {
     printf("inquery_string_cmp() detects a lexicographically smaller Unicode"
             " string...");
@@ -229,7 +287,10 @@ static void test_cmp_7(void)
 }
 
 
-static void test_cmp_8(void)
+/*
+ * cmp_8() - test case #8 for inquery_string_cmp()
+ */
+static void cmp_8(void)
 {
     printf("inquery_string_cmp() detects a lexicographically greater ASCII"
             "string...");
@@ -242,7 +303,10 @@ static void test_cmp_8(void)
 }
 
 
-static void test_cmp_9(void)
+/*
+ * cmp_9() - test case #9 for inquery_string_cmp()
+ */
+static void cmp_9(void)
 {
     printf("inquery_string_cmp() detects a lexicographically greater Unicode"
             " string...");
@@ -255,7 +319,10 @@ static void test_cmp_9(void)
 }
 
 
-static void test_add_1(void)
+/*
+ * add_1() - test case #1 for inquery_string_add()
+ */
+static void add_1(void)
 {
     printf("inquery_string_add() adds two null strings...");
 
@@ -267,7 +334,10 @@ static void test_add_1(void)
 }
 
 
-static void test_add_2(void)
+/*
+ * add_2() - test case #2 for inquery_string_add()
+ */
+static void add_2(void)
 {
     printf("inquery_string_add() adds two ASCII strings...");
 
@@ -281,7 +351,10 @@ static void test_add_2(void)
 }
 
 
-static void test_add_3(void)
+/*
+ * add_3() - test case #3 for inquery_string_add()
+ */
+static void add_3(void)
 {
     printf("inquery_string_add() adds two Unicode strings...");
 
@@ -296,7 +369,10 @@ static void test_add_3(void)
 }
 
 
-static void test_find_1(void)
+/*
+ * find_1() - test case #1 for inquery_string_find()
+ */
+static void find_1(void)
 {
     printf("inquery_string_find() can find a null string");
 
@@ -307,7 +383,10 @@ static void test_find_1(void)
 }
 
 
-static void test_find_2(void)
+/*
+ * find_2() - test case #2 for inquery_string_find()
+ */
+static void find_2(void)
 {
     printf("inquery_string_find() can find an ASCII string with 1 character");
 
@@ -318,7 +397,10 @@ static void test_find_2(void)
 }
 
 
-static void test_find_3(void)
+/*
+ * find_3() - test case #3 for inquery_string_find()
+ */
+static void find_3(void)
 {
     printf("inquery_string_find() can find a Unicode string with 1 character");
 
@@ -329,7 +411,10 @@ static void test_find_3(void)
 }
 
 
-static void test_find_4(void)
+/*
+ * find_4() - test case #4 for inquery_string_find()
+ */
+static void find_4(void)
 {
     printf("inquery_string_find() can find an ASCII string");
 
@@ -340,7 +425,10 @@ static void test_find_4(void)
 }
 
 
-static void test_find_5(void)
+/*
+ * find_5() - test case #5 for inquery_string_find()
+ */
+static void find_5(void)
 {
     printf("inquery_string_find() can find a Unicode string");
 
@@ -351,8 +439,10 @@ static void test_find_5(void)
 }
 
 
-
-static void test_find_6(void)
+/*
+ * find_6() - test case #5 for inquery_string_find()
+ */
+static void find_6(void)
 {
     printf("inquery_string_find() can detect the absence of an ASCII string"
             " with 1 character");
@@ -364,7 +454,10 @@ static void test_find_6(void)
 }
 
 
-static void test_find_7(void)
+/*
+ * find_7() - test case #5 for inquery_string_find()
+ */
+static void find_7(void)
 {
     printf("inquery_string_find() can detect the absence of a Unicode string"
             " with 1 character");
@@ -376,7 +469,10 @@ static void test_find_7(void)
 }
 
 
-static void test_find_8(void)
+/*
+ * find_8() - test case #8 for inquery_string_find()
+ */
+static void find_8(void)
 {
     printf("inquery_string_find() can detect the absence of an ASCII string");
 
@@ -387,7 +483,10 @@ static void test_find_8(void)
 }
 
 
-static void test_find_9(void)
+/*
+ * find_9() - test case #9 for inquery_string_find()
+ */
+static void find_9(void)
 {
     printf("inquery_string_find() can detect the absence of a Unicode string");
 
@@ -398,10 +497,13 @@ static void test_find_9(void)
 }
 
 
-static void inquery_string_replace_first_test_1(void)
+/*
+ * replace_first_1() - test case #1 for inquery_string_replace_first()
+ */
+static void replace_first_1(void)
 {
-    printf("inquery_string_replace_first() replaces an ASCII character with a null"
-            " character");
+    printf("inquery_string_replace_first() replaces an ASCII character with a"
+            " null character");
 
     inquery_string_smart *test = inquery_string_new("Hello, world!");
     inquery_string_replace_first(&test, "!", "");
@@ -411,7 +513,10 @@ static void inquery_string_replace_first_test_1(void)
 }
 
 
-static void inquery_string_replace_first_test_2(void)
+/*
+ * replace_first_2() - test case #2 for inquery_string_replace_first()
+ */
+static void replace_first_2(void)
 {
     printf("inquery_string_replace_first() replaces a Unicode character with a"
             " null character");
@@ -424,7 +529,10 @@ static void inquery_string_replace_first_test_2(void)
 }
 
 
-static void inquery_string_replace_first_test_3(void)
+/*
+ * replace_first_3() - test case #3 for inquery_string_replace_first()
+ */
+static void replace_first_3(void)
 {
     printf("inquery_string_replace_first() replaces only the first instance in an"
             " ASCII string");
@@ -437,7 +545,10 @@ static void inquery_string_replace_first_test_3(void)
 }
 
 
-static void inquery_string_replace_first_test_4(void)
+/*
+ * replace_first_4() - test case #4 for inquery_string_replace_first()
+ */
+static void replace_first_4(void)
 {
     printf("inquery_string_replace_first() replaces only the first instance in a"
             " Unicode string");
@@ -450,7 +561,10 @@ static void inquery_string_replace_first_test_4(void)
 }
 
 
-static void inquery_string_replace_first_test_5(void)
+/*
+ * replace_first_5() - test case #5 for inquery_string_replace_first()
+ */
+static void replace_first_5(void)
 {
     printf("inquery_string_replace_first() replaces an ASCII substring");
 
@@ -462,7 +576,10 @@ static void inquery_string_replace_first_test_5(void)
 }
 
 
-static void inquery_string_replace_first_test_6(void)
+/*
+ * replace_first_6() - test case #6 for inquery_string_replace_first()
+ */
+static void replace_first_6(void)
 {
     printf("inquery_string_replace_first() replaces a Unicode substring");
 
@@ -474,7 +591,10 @@ static void inquery_string_replace_first_test_6(void)
 }
 
 
-static void inquery_string_replace_first_test_7(void)
+/*
+ * replace_first_7() - test case #7 for inquery_string_replace_first()
+ */
+static void replace_first_7(void)
 {
     printf("inquery_string_replace_first() replaces an entire ASCII string");
 
@@ -487,7 +607,10 @@ static void inquery_string_replace_first_test_7(void)
 }
 
 
-static void inquery_string_replace_first_test_8(void)
+/*
+ * replace_first_8() - test case #8 for inquery_string_replace_first()
+ */
+static void replace_first_8(void)
 {
     printf("inquery_string_replace_first() replaces an entire Unicode string");
 
@@ -500,7 +623,10 @@ static void inquery_string_replace_first_test_8(void)
 }
 
 
-static void inquery_string_replace_first_test_9(void)
+/*
+ * replace_first_9() - test case #9 for inquery_string_replace_first()
+ */
+static void replace_first_9(void)
 {
     printf("inquery_string_replace_first() has no effect if @ctx, @what, and"
             "@with are all the same");
@@ -515,7 +641,10 @@ static void inquery_string_replace_first_test_9(void)
 }
 
 
-static void inquery_string_replace_first_test_10(void)
+/*
+ * replace_first_10() - test case #10 for inquery_string_replace_first()
+ */
+static void replace_first_10(void)
 {
     printf("inquery_string_replace_first() can replace the first instance of"
             " the same sequence of characters");
@@ -529,7 +658,10 @@ static void inquery_string_replace_first_test_10(void)
 }
 
 
-static void inquery_string_replace_test_1(void)
+/*
+ * replace_1() - test case #1 for inquery_string_replace()
+ */
+static void replace_1(void)
 {
     printf("inquery_string_replace() replaces an ASCII character with a null"
             " character");
@@ -542,7 +674,10 @@ static void inquery_string_replace_test_1(void)
 }
 
 
-static void inquery_string_replace_test_2(void)
+/*
+ * replace_2() - test case #2 for inquery_string_replace()
+ */
+static void replace_2(void)
 {
     printf("inquery_string_replace() replaces a Unicode character with a null"
             " character");
@@ -555,7 +690,10 @@ static void inquery_string_replace_test_2(void)
 }
 
 
-static void inquery_string_replace_test_3(void)
+/*
+ * replace_3() - test case #3 for inquery_string_replace()
+ */
+static void replace_3(void)
 {
     printf("inquery_string_replace() replaces all the instances in an ASCII"
             " string");
@@ -568,7 +706,10 @@ static void inquery_string_replace_test_3(void)
 }
 
 
-static void inquery_string_replace_test_4(void)
+/*
+ * replace_4() - test case #4 for inquery_string_replace()
+ */
+static void replace_4(void)
 {
     printf("inquery_string_replace() replaces all the instances in a Unicode"
             " string");
@@ -581,7 +722,10 @@ static void inquery_string_replace_test_4(void)
 }
 
 
-static void inquery_string_replace_test_5(void)
+/*
+ * replace_5() - test case #5 for inquery_string_replace()
+ */
+static void replace_5(void)
 {
     printf("inquery_string_replace() replaces an ASCII substring");
     
@@ -593,7 +737,10 @@ static void inquery_string_replace_test_5(void)
 }
 
 
-static void inquery_string_replace_test_6(void)
+/*
+ * replace_6() - test case #6 for inquery_string_replace()
+ */
+static void replace_6(void)
 {
     printf("inquery_string_replace() replaces a Unicode substring");
     
@@ -605,7 +752,10 @@ static void inquery_string_replace_test_6(void)
 }
 
 
-static void inquery_string_replace_test_7(void)
+/*
+ * replace_7() - test case #7 for inquery_string_replace()
+ */
+static void replace_7(void)
 {
     printf("inquery_string_replace() replaces an entire ASCII string");
     
@@ -618,7 +768,10 @@ static void inquery_string_replace_test_7(void)
 }
 
 
-static void inquery_string_replace_test_8(void)
+/*
+ * replace_8() - test case #8 for inquery_string_replace()
+ */
+static void replace_8(void)
 {
     printf("inquery_string_replace() replaces an entire Unicode string");
     
@@ -631,7 +784,10 @@ static void inquery_string_replace_test_8(void)
 }
 
 
-static void inquery_string_replace_test_9(void)
+/*
+ * replace_9() - test case #9 for inquery_string_replace()
+ */
+static void replace_9(void)
 {
     printf("inquery_string_replace() has no effect if @ctx, @what, and @with"
             " are all the same");
@@ -646,7 +802,10 @@ static void inquery_string_replace_test_9(void)
 }
 
 
-static void inquery_string_replace_test_10(void)
+/*
+ * replace_10() - test case #10 for inquery_string_replace()
+ */
+static void replace_10(void)
 {
     printf("inquery_string_replace() can replace all instance of the same"
             " sequence of characters");
@@ -660,72 +819,75 @@ static void inquery_string_replace_test_10(void)
 }
 
 
+/*
+ * inquery_test_suite_string() - string interface test suite
+ */
 extern void inquery_test_suite_string(void)
 {
     printf("===============================================================\n");
     printf("Starting string interface test suite...\n\n");
 
-    test_new_empty_1();
-    test_new_1();
-    test_new_2();
+    new_empty_1();
+    new_1();
+    new_2();
 
-    test_copy_1();
-    test_copy_2();
-    test_copy_3();
+    copy_1();
+    copy_2();
+    copy_3();
 
-    test_len_1();
-    test_len_2();
-    test_len_3();
+    len_1();
+    len_2();
+    len_3();
 
-    test_sz_1();
-    test_sz_2();
-    test_sz_3();
+    sz_1();
+    sz_2();
+    sz_3();
 
-    test_cmp_1();
-    test_cmp_2();
-    test_cmp_3();
-    test_cmp_4();
-    test_cmp_5();
-    test_cmp_6();
-    test_cmp_7();
-    test_cmp_8();
-    test_cmp_9();
+    cmp_1();
+    cmp_2();
+    cmp_3();
+    cmp_4();
+    cmp_5();
+    cmp_6();
+    cmp_7();
+    cmp_8();
+    cmp_9();
 
-    test_add_1();
-    test_add_2();
-    test_add_3();
+    add_1();
+    add_2();
+    add_3();
 
-    test_find_1();
-    test_find_2();
-    test_find_3();
-    test_find_4();
-    test_find_5();
-    test_find_6();
-    test_find_7();
-    test_find_8();
-    test_find_9();
+    find_1();
+    find_2();
+    find_3();
+    find_4();
+    find_5();
+    find_6();
+    find_7();
+    find_8();
+    find_9();
 
-    inquery_string_replace_first_test_1();
-    inquery_string_replace_first_test_2();
-    inquery_string_replace_first_test_3();
-    inquery_string_replace_first_test_4();
-    inquery_string_replace_first_test_5();
-    inquery_string_replace_first_test_6();
-    inquery_string_replace_first_test_7();
-    inquery_string_replace_first_test_8();
-    inquery_string_replace_first_test_9();
-    inquery_string_replace_first_test_10();
+    replace_first_1();
+    replace_first_2();
+    replace_first_3();
+    replace_first_4();
+    replace_first_5();
+    replace_first_6();
+    replace_first_7();
+    replace_first_8();
+    replace_first_9();
+    replace_first_10();
 
-    inquery_string_replace_test_1();
-    inquery_string_replace_test_2();
-    inquery_string_replace_test_3();
-    inquery_string_replace_test_4();
-    inquery_string_replace_test_5();
-    inquery_string_replace_test_6();
-    inquery_string_replace_test_7();
-    inquery_string_replace_test_8();
-    inquery_string_replace_test_9();
-    inquery_string_replace_test_10();
+    replace_1();
+    replace_2();
+    replace_3();
+    replace_4();
+    replace_5();
+    replace_6();
+    replace_7();
+    replace_8();
+    replace_9();
+    replace_10();
 
     printf("\n");
 }

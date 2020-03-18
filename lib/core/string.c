@@ -26,6 +26,10 @@ static void replace_first(inquery_string **h, const inquery_string *n,
     *h = s;
 }
 
+
+/*
+ * inquery_string_new() - create new string
+ */
 extern inquery_string *inquery_string_new(const char *cstr)
 {
     inquery_assert (cstr);
@@ -40,12 +44,18 @@ extern inquery_string *inquery_string_new(const char *cstr)
 }
 
 
+/*
+ * inquery_string_new_empty() - create new empty string
+ */
 extern inquery_string *inquery_string_new_empty(void)
 {
     return inquery_string_new("");
 }
 
 
+/*
+ * inquery_string_copy() - copy existing string
+ */
 extern inquery_string *inquery_string_copy(const inquery_string *ctx)
 {
     inquery_assert (ctx);
@@ -54,12 +64,18 @@ extern inquery_string *inquery_string_copy(const inquery_string *ctx)
 }
 
 
+/*
+ * inquery_string_free() - release string
+ */
 extern void inquery_string_free(inquery_string **ctx)
 {
     inquery_heap_free((void **) ctx);
 }
 
 
+/*
+ * inquery_string_len() - get length of string
+ */
 extern size_t inquery_string_len(const inquery_string *ctx)
 {
     register size_t i = 0, len = 0;
@@ -74,6 +90,9 @@ extern size_t inquery_string_len(const inquery_string *ctx)
 }
 
 
+/*
+ * inquery_string_sz() - get size of string
+ */
 extern size_t inquery_string_sz(const inquery_string *ctx)
 {
     inquery_assert (ctx);
@@ -82,6 +101,9 @@ extern size_t inquery_string_sz(const inquery_string *ctx)
 }
 
 
+/*
+ * inquery_string_cmp() - compare two strings
+ */
 extern int inquery_string_cmp(const inquery_string *lhs, 
         const inquery_string *rhs)
 {
@@ -91,18 +113,30 @@ extern int inquery_string_cmp(const inquery_string *lhs,
 }
 
 
+/*
+ * inquery_string_lt() - check if string is less than another
+ */
 extern inline bool inquery_string_lt(const inquery_string *lhs,
         const inquery_string *rhs);
 
 
+/*
+ * inquery_string_eq() - check if string is equal to another
+ */
 extern inline bool inquery_string_eq(const inquery_string *lhs,
         const inquery_string *rhs);
 
 
+/*
+ * inquery_string_gt() - check if string is greater than another
+ */
 extern inline bool inquery_string_gt(const inquery_string *lhs,
         const inquery_string *rhs);
 
 
+/*
+ * inquery_string_add() - concatenate two strings
+ */
 extern void inquery_string_add(inquery_string **ctx, const inquery_string *add)
 {
     inquery_assert (ctx && *ctx && add);
@@ -123,6 +157,9 @@ extern void inquery_string_add(inquery_string **ctx, const inquery_string *add)
 }
 
 
+/*
+ * inquery_string_find() - find first occurrence of substring
+ */
 extern size_t inquery_string_find(const inquery_string *ctx, 
         const inquery_string *what)
 {
@@ -133,6 +170,9 @@ extern size_t inquery_string_find(const inquery_string *ctx,
 }
 
 
+/*
+ * inquery_string_count() - count all occurrences of substring
+ */
 extern size_t inquery_string_count(const inquery_string *ctx,
         const inquery_string *what)
 {
@@ -150,6 +190,9 @@ extern size_t inquery_string_count(const inquery_string *ctx,
 }
 
 
+/*
+ * inquery_string_replace() - replace all occurrences of substring
+ */
 extern void inquery_string_replace(inquery_string **ctx, 
         const inquery_string *what, const inquery_string *with)
 {
@@ -174,6 +217,9 @@ extern void inquery_string_replace(inquery_string **ctx,
 }
 
 
+/*
+ * inquery_string_replace_first() - replace first occurrenct of substring
+ */
 extern void inquery_string_replace_first(inquery_string **ctx, 
         const inquery_string *what, const inquery_string *with)
 {
