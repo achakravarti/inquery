@@ -130,8 +130,16 @@ extern void inquery_heap_free(void **bfr);
  * STRING
  */
 
+
+/*
+ * inquery_string - UTF-8 string
+ */
 typedef char inquery_string;
 
+
+/*
+ * inquery_string_smart - smart string pointer
+ */
 #if (defined __GNUC__ || defined __clang__)
 #   define inquery_string_smart \
             __attribute__((cleanup(inquery_string_free))) inquery_string
@@ -140,21 +148,53 @@ typedef char inquery_string;
 #   warning "inquery_string_smart leaks memory on non GCC-compatible compilers"
 #endif
 
+
+/*
+ * inquery_string_new() - create new string
+ */
 extern inquery_string *inquery_string_new(const char *cstr);
 
+
+/*
+ * inquery_string_new_empty() - create new empty string
+ */
 extern inquery_string *inquery_string_new_empty(void);
 
+
+/*
+ * inquery_string_copy() - copy existing string
+ */
 extern inquery_string *inquery_string_copy(const inquery_string *ctx);
 
+
+/*
+ * inquery_string_free() - release string
+ */
 extern void inquery_string_free(inquery_string **ctx);
 
+
+/*
+ * inquery_string_len() - get length of string
+ */
 extern size_t inquery_string_len(const inquery_string *ctx);
 
+
+/*
+ * inquery_string_sz() - get size of string
+ */
 extern size_t inquery_string_sz(const inquery_string *ctx);
 
+
+/*
+ * inquery_string_cmp() - compare two strings
+ */
 extern int inquery_string_cmp(const inquery_string *lhs, 
         const inquery_string *rhs);
 
+
+/*
+ * inquery_string_lt() - check if string is less than another
+ */
 inline bool inquery_string_lt(const inquery_string *lhs,
         const inquery_string *rhs)
 {
@@ -163,6 +203,10 @@ inline bool inquery_string_lt(const inquery_string *lhs,
     return inquery_string_cmp(lhs, rhs) < 0;
 }
 
+
+/*
+ * inquery_string_eq() - check if string is equal to another
+ */
 inline bool inquery_string_eq(const inquery_string *lhs,
         const inquery_string *rhs)
 {
@@ -171,6 +215,10 @@ inline bool inquery_string_eq(const inquery_string *lhs,
     return !inquery_string_cmp(lhs, rhs);
 }
 
+
+/*
+ * inquery_string_gt() - check if string is greater than another
+ */
 inline bool inquery_string_gt(const inquery_string *lhs,
         const inquery_string *rhs)
 {
@@ -179,14 +227,30 @@ inline bool inquery_string_gt(const inquery_string *lhs,
     return inquery_string_cmp(lhs, rhs) > 0;
 }
 
+
+/*
+ * inquery_string_add() - concatenate two strings
+ */
 extern void inquery_string_add(inquery_string **ctx, const inquery_string *add);
 
+
+/*
+ * inquery_string_find() - find first occurrence of substring
+ */
 extern size_t inquery_string_find(const inquery_string *ctx, 
         const inquery_string *what);
 
+
+/*
+ * inquery_string_replace() - replace all occurrences of substring
+ */
 extern void inquery_string_replace(inquery_string **ctx, 
         const inquery_string *what, const inquery_string *with);
 
+
+/*
+ * inquery_string_replace_first() - replace first occurrenct of substring
+ */
 extern void inquery_string_replace_first(inquery_string **ctx, 
         const inquery_string *what, const inquery_string *with);
 
