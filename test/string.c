@@ -187,7 +187,7 @@ static void test_cmp_4(void)
     inquery_string_smart *rhs = inquery_string_new("Goodbye, moon?");
     inquery_require (inquery_string_cmp(lhs, rhs));
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -199,7 +199,7 @@ static void test_cmp_5(void)
     inquery_string_smart *rhs = inquery_string_new("До свидания, луна?");
     inquery_require (inquery_string_cmp(lhs, rhs));
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -225,7 +225,7 @@ static void test_cmp_7(void)
     inquery_string_smart *rhs = inquery_string_new("Привет, мир!");
     inquery_require (inquery_string_cmp(lhs, rhs) < 0);
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -238,7 +238,7 @@ static void test_cmp_8(void)
     inquery_string_smart *rhs = inquery_string_new("Hello, world!");
     inquery_require (inquery_string_cmp(rhs, lhs) > 0);
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -251,7 +251,7 @@ static void test_cmp_9(void)
     inquery_string_smart *rhs = inquery_string_new("Привет, мир!");
     inquery_require (inquery_string_cmp(rhs, lhs) > 0);
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -263,7 +263,7 @@ static void test_add_1(void)
     inquery_string_add(&test, "");
     inquery_require (!*test);
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -277,7 +277,7 @@ static void test_add_2(void)
     inquery_string_add(&test, "!");
     inquery_require (!strcmp(test, "Hello, world!"));
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -292,7 +292,7 @@ static void test_add_3(void)
     inquery_string_add(&test, "?");
     inquery_require (!strcmp(test, expect));
 
-    printf("OK\n");;
+    printf("OK\n");
 }
 
 
@@ -529,6 +529,137 @@ static void inquery_string_replace_first_test_10(void)
 }
 
 
+static void inquery_string_replace_test_1(void)
+{
+    printf("inquery_string_replace() replaces an ASCII character with a null"
+            " character");
+    
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
+    inquery_string_replace(&test, "!", "");
+    inquery_require (!strcmp(test, "Hello, world"));
+    
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_2(void)
+{
+    printf("inquery_string_replace() replaces a Unicode character with a null"
+            " character");
+    
+    inquery_string_smart *test = inquery_string_new("Привет, мир!");
+    inquery_string_replace(&test, "т", "");
+    inquery_require (!strcmp(test, "Приве, мир!"));
+    
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_3(void)
+{
+    printf("inquery_string_replace() replaces all the instances in an ASCII"
+            " string");
+
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
+    inquery_string_replace(&test, "l", "y");
+    inquery_require (!strcmp(test, "Heyyo, woryd!"));
+    
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_4(void)
+{
+    printf("inquery_string_replace() replaces all the instances in a Unicode"
+            " string");
+    
+    inquery_string_smart *test = inquery_string_new("Привет, мир!");
+    inquery_string_replace(&test, "р", "r");
+    inquery_require (!strcmp(test, "Пrивет, миr!"));
+    
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_5(void)
+{
+    printf("inquery_string_replace() replaces an ASCII substring");
+    
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
+    inquery_string_replace(&test, "world", "moon");
+    inquery_require (!strcmp(test, "Hello, moon!"));
+    
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_6(void)
+{
+    printf("inquery_string_replace() replaces a Unicode substring");
+    
+    inquery_string_smart *test = inquery_string_new("Привет, мир!");
+    inquery_string_replace(&test, "Привет", "До свидания");
+    inquery_require (!strcmp(test, "До свидания, мир!"));
+
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_7(void)
+{
+    printf("inquery_string_replace() replaces an entire ASCII string");
+    
+    const inquery_string *expect = "Goodbye, moon?";
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
+    inquery_string_replace(&test, "Hello, world!", expect);
+    inquery_require (!strcmp(test, expect));
+    
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_8(void)
+{
+    printf("inquery_string_replace() replaces an entire Unicode string");
+    
+    const inquery_string *expect = "До свидания, луна?";
+    inquery_string_smart *test = inquery_string_new("Привет, мир!");
+    inquery_string_replace(&test, "Привет, мир!", expect);
+    inquery_require (!strcmp(test, expect));
+
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_9(void)
+{
+    printf("inquery_string_replace() has no effect if @ctx, @what, and @with"
+            " are all the same");
+
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
+    inquery_string_smart *what = inquery_string_new("Hello, world!");
+    inquery_string_smart *with = inquery_string_new("Hello, world!");
+    inquery_string_replace(&test, what, with);
+    inquery_require (!strcmp(test, what));
+    
+    printf("...OK\n");
+}
+
+
+static void inquery_string_replace_test_10(void)
+{
+    printf("inquery_string_replace() can replace all instance of the same"
+            " sequence of characters");
+    
+    inquery_string_smart *test = inquery_string_new("Hello, world!");
+    inquery_string_smart *expect = inquery_string_new("Hellllo, worlld!");
+    inquery_string_replace(&test, "l", "ll");
+    inquery_require (!inquery_string_cmp(test, expect));
+    
+    printf("...OK\n");
+}
+
+
 extern void inquery_test_suite_string(void)
 {
     printf("===============================================================\n");
@@ -584,6 +715,17 @@ extern void inquery_test_suite_string(void)
     inquery_string_replace_first_test_8();
     inquery_string_replace_first_test_9();
     inquery_string_replace_first_test_10();
+
+    inquery_string_replace_test_1();
+    inquery_string_replace_test_2();
+    inquery_string_replace_test_3();
+    inquery_string_replace_test_4();
+    inquery_string_replace_test_5();
+    inquery_string_replace_test_6();
+    inquery_string_replace_test_7();
+    inquery_string_replace_test_8();
+    inquery_string_replace_test_9();
+    inquery_string_replace_test_10();
 
     printf("\n");
 }
