@@ -371,6 +371,8 @@ inline void inquery_value_free(inquery_value **ctx)
 
 extern bool inquery_value_nil(const inquery_value *ctx);
 
+extern enum inquery_value_type inquery_value_type(const inquery_value *ctx);
+
 extern uint64_t inquery_value_int(const inquery_value *ctx);
 
 extern double inquery_value_real(const inquery_value *ctx);
