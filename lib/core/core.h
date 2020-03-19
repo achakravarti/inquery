@@ -27,6 +27,7 @@
 
 
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -329,6 +330,366 @@ extern const void *inquery_object_payload(const inquery_object *ctx);
  * inquery_object_payload_mutable() - get mutable handle to object payload
  */
 extern void *inquery_object_payload_mutable(inquery_object **ctx);
+
+
+/*******************************************************************************
+ * VALUE
+ */
+
+
+/*
+ * inquery_value - boxed value
+ */
+typedef inquery_object inquery_value;
+
+
+/*
+ * inquery_value_smart - smart boxed value
+ */
+#define inquery_value_smart inquery_object_smart
+
+
+/*
+ * enum inquery_value_type - enumerated value types
+ */
+enum inquery_value_type {
+    INQUERY_VALUE_TYPE_NIL,
+    INQUERY_VALUE_TYPE_INT,
+    INQUERY_VALUE_TYPE_REAL,
+    INQUERY_VALUE_TYPE_TEXT
+};
+
+
+/*
+ * inquery_value_new() - create new nil value
+ */
+extern inquery_value *inquery_value_new(void);
+
+
+/*
+ * inquery_value_new_int() - create new integer value
+ */
+extern inquery_value *inquery_value_new_int(int64_t val);
+
+
+/*
+ * inquery_value_new_real() - create new real value
+ */
+extern inquery_value *inquery_value_new_real(double val);
+
+
+/*
+ * inquery_value_new_text() - create new text value
+ */
+extern inquery_value *inquery_value_new_text(const inquery_string *val);
+
+
+/*
+ * inquery_value_copy() - create copy of existing value
+ */
+inline inquery_value *inquery_value_copy(const inquery_value *ctx)
+{
+    return inquery_object_copy(ctx);
+}
+
+
+/*
+ * inquery_value_free() - free value from heap
+ */
+inline void inquery_value_free(inquery_value **ctx)
+{
+    inquery_object_free(ctx);
+}
+
+
+/*
+ * inquery_value_type() - get value type
+ */
+extern enum inquery_value_type inquery_value_type(const inquery_value *ctx);
+
+
+/*
+ * inquery_value_cmp() - comnpare two values
+ */
+extern int inquery_value_cmp(const inquery_value *ctx, 
+        const inquery_value *cmp);
+
+
+/*
+ * inquery_value_lt() - check if value is less than another
+ */
+inline bool inquery_value_lt(const inquery_value *ctx, 
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) < 0;
+}
+
+
+/*
+ * inquery_value_lteq() - check if value is less than or equal to another
+ */
+inline bool inquery_value_lteq(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) <= 0;
+}
+
+
+/*
+ * inquery_value_eq() - check if value is equal to another
+ */
+inline bool inquery_value_eq(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return !inquery_value_cmp(ctx, cmp);
+}
+
+
+/*
+ * inquery_value_gteq() - check if value is greater than or equal to another
+ */
+inline bool inquery_value_gteq(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) >= 0;
+}
+
+
+/*
+ * inquery_value_gt() - check if value is greater than another
+ */
+inline bool inquery_value_gt(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) > 0;
+}
+
+
+/*
+ * inquery_value_nil() - check if value is nil
+ */
+extern bool inquery_value_nil(const inquery_value *ctx);
+
+
+/*
+ * inquery_value_int() - unbox integer value
+ */
+extern int64_t inquery_value_int(const inquery_value *ctx);
+
+
+/*
+ * inquery_value_real() - unbox real value
+ */
+extern double inquery_value_real(const inquery_value *ctx);
+
+
+/*
+ * inquery_value_text() - unbox text value
+ */
+extern inquery_string *inquery_value_text(const inquery_value *ctx);
+
+
+/*
+ * inquery_value_string() - get string representation of value
+ */
+extern inquery_string *inquery_value_string(const inquery_value *ctx);
+
+
+/*******************************************************************************
+ * ATTRIBUTE
+ */
+
+
+/*
+ * inquery_attribute - entity attribute
+ */
+typedef inquery_object inquery_attribute;
+
+
+/*
+ * inquery_attribute_smart - smart attribute
+ */
+#define inquery_attribute_smart inquery_object_smart
+
+
+/*
+ * inquery_attribute_new() - create new attribute
+ */
+extern inquery_attribute *inquery_attribute_new(const inquery_string *key, 
+         const inquery_value *val);
+
+
+/*
+ * inquery_attribute_new_nil() - create new nil attribute
+ */
+inline inquery_attribute *inquery_attribute_new_nil(const inquery_string *key)
+{
+    inquery_value_smart *val = inquery_value_new();
+    return inquery_attribute_new(key, val);
+}
+
+
+/*
+ * inquery_attribute_new_int() - create new date attribute
+ */
+inline inquery_attribute *inquery_attribute_new_int(const inquery_string *key,
+        int64_t val)
+{
+    inquery_value_smart *v = inquery_value_new_int(val);
+    return inquery_attribute_new(key, v);
+}
+
+
+/*
+ * inquery_attribute_new_real() - create new real attribute
+ */
+inline inquery_attribute *inquery_attribute_new_real(const inquery_string *key,
+        double val)
+{
+    inquery_value_smart *v = inquery_value_new_real(val);
+    return inquery_attribute_new(key, v);
+}
+
+
+/*
+ * inquery_attribute_new_text() - create new text attribute
+ */
+inline inquery_attribute *inquery_attribute_new_text(const inquery_string *key,
+        inquery_string *val)
+{
+    inquery_value_smart *v = inquery_value_new_text(val);
+    return inquery_attribute_new(key, v);
+}
+
+
+/*
+ * inquery_attribute_copy() - copy existing attribute
+ */
+inline inquery_attribute *inquery_attribute_copy(const inquery_attribute *ctx)
+{
+    return inquery_object_copy(ctx);
+}
+
+
+/*
+ * inquery_attribute_free() - free attribute from heap
+ */
+inline void inquery_attribute_free(inquery_attribute **ctx)
+{
+    inquery_object_free(ctx);
+}
+
+
+/*
+ * inquery_attribute_key() - get attribute key
+ */
+extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_value() - get attribute value
+ */
+extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_type() - get attribute type
+ */
+extern enum inquery_value_type inquery_attribute_type(
+        const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_cmp() - compare two attributes
+ */
+extern int inquery_attribute_cmp(const inquery_attribute *ctx,
+        const inquery_attribute *cmp);
+
+
+/*
+ * inquery_attribute_lt() - check if attribute is < another
+ */
+inline bool inquery_attribute_lt(const inquery_attribute *ctx, 
+        const inquery_attribute *cmp)
+{
+    return inquery_attribute_cmp(ctx, cmp) < 0;
+}
+
+
+/*
+ * inquery_attribute_lteq() - check if attribute is <= another
+ */
+inline bool inquery_attribute_lteq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return inquery_attribute_cmp(ctx, cmp) <= 0;
+}
+
+
+/*
+ * inquery_attribute_eq() - check if attribute is == another
+ */
+inline bool inquery_attribute_eq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return !inquery_attribute_cmp(ctx, cmp);
+}
+
+
+/*
+ * inquery_attribute_gteq() - check if attribute is >= another
+ */
+inline bool inquery_attribute_gteq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) >= 0;
+}
+
+
+/*
+ * inquery_attribute_gt() - check if attribute is > another
+ */
+inline bool inquery_attribute_gt(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return inquery_attribute_cmp(ctx, cmp) > 0;
+}
+
+
+/*
+ * inquery_attribute_nil() - check if attribute is nil
+ */
+extern bool inquery_attribute_nil(const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_int() - unbox integer attribute
+ */
+extern int64_t inquery_attribute_int(const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_real() - unbox real attribute
+ */
+extern double inquery_attribute_real(const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_text() - unbox text attribute
+ */
+extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_string() - represent attribute as string
+ */
+extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx);
+
+
+/*
+ * inquery_attribute_json() - represent attribute as JSON
+ */
+extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */

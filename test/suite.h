@@ -19,5 +19,17 @@ extern void inquery_test_suite_string(void);
 extern void inquery_test_suite_object(void);
 
 
+/*
+ * inquery_test_suite_value() - value interface test suite
+ */
+extern void inquery_test_suite_value(void);
+
+
+/*
+ * inquery_test_suite_attribute() - attribute interface test suite
+ */
+extern void inquery_test_suite_attribute(void);
+
+
 #endif /* INQUERY_TEST_SUITE_HEADER */
 
