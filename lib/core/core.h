@@ -27,6 +27,7 @@
 
 
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -329,6 +330,85 @@ extern const void *inquery_object_payload(const inquery_object *ctx);
  * inquery_object_payload_mutable() - get mutable handle to object payload
  */
 extern void *inquery_object_payload_mutable(inquery_object **ctx);
+
+
+/*******************************************************************************
+ * VALUE
+ */
+
+
+typedef inquery_object inquery_value;
+
+#define inquery_value_smart inquery_object_smart
+
+enum inquery_value_type {
+    INQUERY_VALUE_TYPE_INT,
+    INQUERY_VALUE_TYPE_REAL,
+    INQUERY_VALUE_TYPE_TEXT
+};
+
+extern inquery_value *inquery_value_new_int(uint64_t val);
+
+extern inquery_value *inquery_value_new_int_nil(void);
+
+extern inquery_value *inquery_value_new_real(double val);
+
+extern inquery_value *inquery_value_new_real_nil(void);
+
+extern inquery_value *inquery_value_new_text(const inquery_string *val);
+
+extern inquery_value *inquery_value_new_text_nil(void);
+
+inline inquery_value *inquery_value_copy(const inquery_value *ctx)
+{
+    return inquery_object_copy(ctx);
+}
+
+inline void inquery_value_free(inquery_value **ctx)
+{
+    inquery_object_free(ctx);
+}
+
+extern bool inquery_value_nil(const inquery_value *ctx);
+
+extern uint64_t inquery_value_int(const inquery_value *ctx);
+
+extern double inquery_value_real(const inquery_value *ctx);
+
+extern inquery_string *inquery_value_text(const inquery_value *ctx);
+
+
+/*******************************************************************************
+ * ATTRIBUTE
+ */
+
+
+typedef inquery_object inquery_attribute;
+
+#define inquery_attribute_smart inquery_object_smart
+
+extern inquery_attribute *inquery_attribute_new(const inquery_string *key, 
+         inquery_value *val);
+
+inline inquery_attribute *inquery_attribute_copy(const inquery_attribute *ctx)
+{
+    return inquery_object_copy(ctx);
+}
+
+inline void inquery_attribute_free(inquery_attribute **ctx)
+{
+    inquery_object_free(ctx);
+}
+
+inquery_string *inquery_attribute_key(const inquery_attribute *ctx);
+
+inquery_value *inquery_attribute_value(const inquery_attribute *ctx);
+
+bool inquery_attribute_nil(const inquery_attribute *ctx);
+
+enum inquery_value_type inquery_attribute_type(const inquery_attribute *ctx);
+
+inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
