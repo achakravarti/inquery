@@ -2,6 +2,9 @@
 #include "core.h"
 
 
+/*
+ * struct payload - object payload for value instance
+ */
 struct payload {
     enum inquery_value_type type;
     size_t size;
@@ -9,6 +12,9 @@ struct payload {
 };
 
 
+/*
+ * payload_new() - create new payload for value instance
+ */
 static struct payload *payload_new(enum inquery_value_type type, size_t sz,
         const void *val)
 {
@@ -28,6 +34,9 @@ static struct payload *payload_new(enum inquery_value_type type, size_t sz,
 }
 
 
+/*
+ * payload_copy() - copy callback function for value v-table
+ */
 static void *payload_copy(const void *ctx)
 {
     const struct payload *src = (const struct payload *) ctx;
@@ -35,6 +44,9 @@ static void *payload_copy(const void *ctx)
 }
 
 
+/*
+ * payload_free() - free callback function for value v-table
+ */
 static void payload_free(void *ctx)
 {
     struct payload *hnd = (struct payload *) ctx;
@@ -42,6 +54,9 @@ static void payload_free(void *ctx)
 }
 
 
+/*
+ * inquery_value_new_int() - create new integer value
+ */
 extern inquery_value *inquery_value_new_int(uint64_t val)
 {
     struct inquery_object_vtable vt = {
@@ -54,6 +69,9 @@ extern inquery_value *inquery_value_new_int(uint64_t val)
 }
 
 
+/*
+ * inquery_value_new_int_nil() - create new nil integer value
+ */
 extern inquery_value *inquery_value_new_int_nil(void)
 {
     struct inquery_object_vtable vt = {
@@ -66,6 +84,9 @@ extern inquery_value *inquery_value_new_int_nil(void)
 }
 
 
+/*
+ * inquery_value_new_real() - create new real value
+ */
 extern inquery_value *inquery_value_new_real(double val)
 {
     struct inquery_object_vtable vt = {
@@ -78,6 +99,9 @@ extern inquery_value *inquery_value_new_real(double val)
 }
 
 
+/*
+ * inquery_value_new_real_nil() - create new nil real value
+ */
 extern inquery_value *inquery_value_new_real_nil(void)
 {
     struct inquery_object_vtable vt = {
@@ -90,6 +114,9 @@ extern inquery_value *inquery_value_new_real_nil(void)
 }
 
 
+/*
+ * inquery_value_new_text() - create new text value
+ */
 extern inquery_value *inquery_value_new_text(const inquery_string *val)
 {
     inquery_assert (val);
@@ -104,6 +131,9 @@ extern inquery_value *inquery_value_new_text(const inquery_string *val)
 }
 
 
+/*
+ * inquery_value_new_text_nil() - create new nil text value
+ */
 extern inquery_value *inquery_value_new_text_nil(void)
 {
     struct inquery_object_vtable vt = {
@@ -116,12 +146,21 @@ extern inquery_value *inquery_value_new_text_nil(void)
 }
 
 
+/*
+ * inquery_value_copy() - create copy of existing value
+ */
 extern inline inquery_value *inquery_value_copy(const inquery_value *ctx);
 
 
+/*
+ * inquery_value_free() - free value from heap
+ */
 extern inline void inquery_value_free(inquery_value **ctx);
 
 
+/*
+ * inquery_value_nil() - check if value is nil
+ */
 extern bool inquery_value_nil(const inquery_value *ctx)
 {
     inquery_assert (ctx);
@@ -131,6 +170,9 @@ extern bool inquery_value_nil(const inquery_value *ctx)
 }
 
 
+/*
+ * inquery_value_type() - get value type
+ */
 extern enum inquery_value_type inquery_value_type(const inquery_value *ctx)
 {
     inquery_assert (ctx);
@@ -140,6 +182,9 @@ extern enum inquery_value_type inquery_value_type(const inquery_value *ctx)
 }
 
 
+/*
+ * inquery_value_int() - unbox integer value
+ */
 extern uint64_t inquery_value_int(const inquery_value *ctx)
 {
     inquery_assert (ctx);
@@ -151,6 +196,9 @@ extern uint64_t inquery_value_int(const inquery_value *ctx)
 }
 
 
+/*
+ * inquery_value_real() - unbox real value
+ */
 extern double inquery_value_real(const inquery_value *ctx)
 {
     inquery_assert (ctx);
@@ -162,6 +210,9 @@ extern double inquery_value_real(const inquery_value *ctx)
 }
 
 
+/*
+ * inquery_value_string() - unbox string value
+ */
 extern inquery_string *inquery_value_text(const inquery_value *ctx)
 {
     inquery_assert (ctx);
