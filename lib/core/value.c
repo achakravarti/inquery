@@ -57,7 +57,7 @@ static void payload_free(void *ctx)
 /*
  * inquery_value_new_int() - create new integer value
  */
-extern inquery_value *inquery_value_new_int(uint64_t val)
+extern inquery_value *inquery_value_new_int(int64_t val)
 {
     struct inquery_object_vtable vt = {
         .payload_copy = &payload_copy,
@@ -65,7 +65,7 @@ extern inquery_value *inquery_value_new_int(uint64_t val)
     };
 
     return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_INT, 
-            sizeof (uint64_t), &val), &vt);
+            sizeof (int64_t), &val), &vt);
 }
 
 
@@ -80,7 +80,7 @@ extern inquery_value *inquery_value_new_int_nil(void)
     };
 
     return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_INT, 
-            sizeof (uint64_t), NULL), &vt);
+            sizeof (int64_t), NULL), &vt);
 }
 
 
@@ -185,14 +185,14 @@ extern enum inquery_value_type inquery_value_type(const inquery_value *ctx)
 /*
  * inquery_value_int() - unbox integer value
  */
-extern uint64_t inquery_value_int(const inquery_value *ctx)
+extern int64_t inquery_value_int(const inquery_value *ctx)
 {
     inquery_assert (ctx);
 
     const struct payload *payload = inquery_object_payload(ctx);
     inquery_assert (payload->type == INQUERY_VALUE_TYPE_INT);
 
-    return *((uint64_t *) payload->value);
+    return *((int64_t *) payload->value);
 }
 
 

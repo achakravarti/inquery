@@ -362,7 +362,7 @@ enum inquery_value_type {
 /*
  * inquery_value_new_int() - create new integer value
  */
-extern inquery_value *inquery_value_new_int(uint64_t val);
+extern inquery_value *inquery_value_new_int(int64_t val);
 
 
 /*
@@ -428,7 +428,7 @@ extern enum inquery_value_type inquery_value_type(const inquery_value *ctx);
 /*
  * inquery_value_int() - unbox integer value
  */
-extern uint64_t inquery_value_int(const inquery_value *ctx);
+extern int64_t inquery_value_int(const inquery_value *ctx);
 
 
 /*
