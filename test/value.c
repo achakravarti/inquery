@@ -3,9 +3,23 @@
 
 
 /*
- * new_int() - test case for inquery_value_new_int()
+ * new_l() - test case for inquery_value_new()
  */
-static void new_int(void)
+static void new_1(void)
+{
+    printf("inquery_value_new() creates a new nil value...");
+
+    inquery_value_smart *test = inquery_value_new();
+    inquery_require (inquery_value_nil(test));
+
+    printf("OK\n");
+}
+
+
+/*
+ * new_int_1() - test case for inquery_value_new_int()
+ */
+static void new_int_1(void)
 {
     printf("inquery_value_new_int() creates a new boxed integer value...");
 
@@ -17,23 +31,9 @@ static void new_int(void)
 
 
 /*
- * new_int_nil() - test case for inquery_value_new_int_nil()
+ * new_real_1() - test case for inquery_value_new_real()
  */
-static void new_int_nil(void)
-{
-    printf("inquery_value_new_int_nil() creates a new nil integer value...");
-
-    inquery_value_smart *test = inquery_value_new_int_nil();
-    inquery_require (inquery_value_nil(test));
-
-    printf("OK\n");
-}
-
-
-/*
- * new_real() - test case for inquery_value_new_real()
- */
-static void new_real(void)
+static void new_real_1(void)
 {
     printf("inquery_value_new_int() creates a new boxed real value...");
 
@@ -45,23 +45,9 @@ static void new_real(void)
 
 
 /*
- * new_real_nil() - test case for inquery_value_new_real_nil()
+ * new_text_1() - test case for inquery_value_new_text()
  */
-static void new_real_nil(void)
-{
-    printf("inquery_value_new_int() creates a new nil real value...");
-
-    inquery_value_smart *test = inquery_value_new_real_nil();
-    inquery_require (inquery_value_nil(test));
-
-    printf("OK\n");
-}
-
-
-/*
- * new_text() - test case for inquery_value_new_text()
- */
-static void new_text(void)
+static void new_text_1(void)
 {
     printf("inquery_value_new_text() creates a new boxed text value...");
 
@@ -73,33 +59,15 @@ static void new_text(void)
 }
 
 
-/*
- * new_text_nil() - test case for inquery_value_new_text_nil()
- */
-static void new_text_nil(void)
-{
-    printf("inquery_value_new_text_nil() creates a new nil text value...");
-
-    inquery_value_smart *test = inquery_value_new_text_nil();
-    inquery_require (inquery_value_nil(test));
-
-    printf("OK\n");
-}
-
-
 extern void inquery_test_suite_value(void)
 {
     printf("===============================================================\n");
     printf("Starting value interface test suite...\n\n");
 
-    new_int();
-    new_int_nil();
-
-    new_real();
-    new_real_nil();
-
-    new_text();
-    new_text_nil();
+    new_1();
+    new_int_1();
+    new_real_1();
+    new_text_1();
 
     printf("\n");
 }

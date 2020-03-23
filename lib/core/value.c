@@ -26,9 +26,8 @@ static struct payload *payload_new(enum inquery_value_type type, size_t sz,
     if (inquery_likely (val)) {
         ctx->value = inquery_heap_new(sz);
         memcpy(ctx->value, val, sz);
-    } else {
+    } else
         ctx->value = NULL;
-    };
 
     return ctx;
 }
@@ -54,33 +53,36 @@ static void payload_free(void *ctx)
 }
 
 
+static void vtable_init(struct inquery_object_vtable *ctx)
+{
+    ctx->payload_copy = &payload_copy;
+    ctx->payload_free = &payload_free;
+}
+
+
+/*
+ * inquery_value_nil() - check if value is nil
+ */
+extern inquery_value *inquery_value_new(void)
+{
+    struct inquery_object_vtable vt;
+    vtable_init(&vt);
+
+    return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_NIL, 0, NULL), 
+                &vt);
+}
+
+
 /*
  * inquery_value_new_int() - create new integer value
  */
 extern inquery_value *inquery_value_new_int(int64_t val)
 {
-    struct inquery_object_vtable vt = {
-        .payload_copy = &payload_copy,
-        .payload_free = &payload_free
-    };
+    struct inquery_object_vtable vt;
+    vtable_init(&vt);
 
     return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_INT, 
             sizeof (int64_t), &val), &vt);
-}
-
-
-/*
- * inquery_value_new_int_nil() - create new nil integer value
- */
-extern inquery_value *inquery_value_new_int_nil(void)
-{
-    struct inquery_object_vtable vt = {
-        .payload_copy = &payload_copy,
-        .payload_free = &payload_free
-    };
-
-    return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_INT, 
-            sizeof (int64_t), NULL), &vt);
 }
 
 
@@ -89,28 +91,11 @@ extern inquery_value *inquery_value_new_int_nil(void)
  */
 extern inquery_value *inquery_value_new_real(double val)
 {
-    struct inquery_object_vtable vt = {
-        .payload_copy = &payload_copy,
-        .payload_free = &payload_free
-    };
+    struct inquery_object_vtable vt;
+    vtable_init(&vt);
 
     return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_REAL, 
             sizeof (double), &val), &vt);
-}
-
-
-/*
- * inquery_value_new_real_nil() - create new nil real value
- */
-extern inquery_value *inquery_value_new_real_nil(void)
-{
-    struct inquery_object_vtable vt = {
-        .payload_copy = &payload_copy,
-        .payload_free = &payload_free
-    };
-
-    return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_REAL, 
-            sizeof (double), NULL), &vt);
 }
 
 
@@ -132,21 +117,6 @@ extern inquery_value *inquery_value_new_text(const inquery_string *val)
 
 
 /*
- * inquery_value_new_text_nil() - create new nil text value
- */
-extern inquery_value *inquery_value_new_text_nil(void)
-{
-    struct inquery_object_vtable vt = {
-        .payload_copy = &payload_copy,
-        .payload_free = &payload_free
-    };
-
-    return inquery_object_new(payload_new(INQUERY_VALUE_TYPE_TEXT, 0, NULL),
-            &vt);
-}
-
-
-/*
  * inquery_value_copy() - create copy of existing value
  */
 extern inline inquery_value *inquery_value_copy(const inquery_value *ctx);
@@ -159,18 +129,6 @@ extern inline void inquery_value_free(inquery_value **ctx);
 
 
 /*
- * inquery_value_nil() - check if value is nil
- */
-extern bool inquery_value_nil(const inquery_value *ctx)
-{
-    inquery_assert (ctx);
-
-    const struct payload *payload = inquery_object_payload(ctx);
-    return !payload->value;
-}
-
-
-/*
  * inquery_value_type() - get value type
  */
 extern enum inquery_value_type inquery_value_type(const inquery_value *ctx)
@@ -179,6 +137,18 @@ extern enum inquery_value_type inquery_value_type(const inquery_value *ctx)
 
     const struct payload *payload = inquery_object_payload(ctx);
     return payload->type;
+}
+
+
+/*
+ * inquery_value_nil() - check if value is nil
+ */
+extern bool inquery_value_nil(const inquery_value *ctx)
+{
+    inquery_assert (ctx);
+
+    const struct payload *payload = inquery_object_payload(ctx);
+    return !payload->value;
 }
 
 
@@ -211,7 +181,7 @@ extern double inquery_value_real(const inquery_value *ctx)
 
 
 /*
- * inquery_value_string() - unbox string value
+ * inquery_value_text() - unbox text value
  */
 extern inquery_string *inquery_value_text(const inquery_value *ctx)
 {

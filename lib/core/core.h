@@ -353,10 +353,17 @@ typedef inquery_object inquery_value;
  * enum inquery_value_type - enumerated value types
  */
 enum inquery_value_type {
+    INQUERY_VALUE_TYPE_NIL,
     INQUERY_VALUE_TYPE_INT,
     INQUERY_VALUE_TYPE_REAL,
     INQUERY_VALUE_TYPE_TEXT
 };
+
+
+/*
+ * inquery_value_new() - create new nil value
+ */
+extern inquery_value *inquery_value_new(void);
 
 
 /*
@@ -366,33 +373,15 @@ extern inquery_value *inquery_value_new_int(int64_t val);
 
 
 /*
- * inquery_value_new_int_nil() - create new nil integer value
- */
-extern inquery_value *inquery_value_new_int_nil(void);
-
-
-/*
  * inquery_value_new_real() - create new real value
  */
 extern inquery_value *inquery_value_new_real(double val);
 
 
 /*
- * inquery_value_new_real_nil() - create new nil real value
- */
-extern inquery_value *inquery_value_new_real_nil(void);
-
-
-/*
  * inquery_value_new_text() - create new text value
  */
 extern inquery_value *inquery_value_new_text(const inquery_string *val);
-
-
-/*
- * inquery_value_new_text_nil() - create new nil text value
- */
-extern inquery_value *inquery_value_new_text_nil(void);
 
 
 /*
@@ -414,15 +403,15 @@ inline void inquery_value_free(inquery_value **ctx)
 
 
 /*
- * inquery_value_nil() - check if value is nil
- */
-extern bool inquery_value_nil(const inquery_value *ctx);
-
-
-/*
  * inquery_value_type() - get value type
  */
 extern enum inquery_value_type inquery_value_type(const inquery_value *ctx);
+
+
+/*
+ * inquery_value_nil() - check if value is nil
+ */
+extern bool inquery_value_nil(const inquery_value *ctx);
 
 
 /*
@@ -438,7 +427,7 @@ extern double inquery_value_real(const inquery_value *ctx);
 
 
 /*
- * inquery_value_string() - unbox string value
+ * inquery_value_text() - unbox text value
  */
 extern inquery_string *inquery_value_text(const inquery_value *ctx);
 
