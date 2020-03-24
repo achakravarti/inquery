@@ -409,6 +409,63 @@ extern enum inquery_value_type inquery_value_type(const inquery_value *ctx);
 
 
 /*
+ * inquery_value_cmp() - comnpare two values
+ */
+extern int inquery_value_cmp(const inquery_value *ctx, 
+        const inquery_value *cmp);
+
+
+/*
+ * inquery_value_lt() - check if value is less than another
+ */
+inline bool inquery_value_lt(const inquery_value *ctx, 
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) < 0;
+}
+
+
+/*
+ * inquery_value_lteq() - check if value is less than or equal to another
+ */
+inline bool inquery_value_lteq(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) <= 0;
+}
+
+
+/*
+ * inquery_value_eq() - check if value is equal to another
+ */
+inline bool inquery_value_eq(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return !inquery_value_cmp(ctx, cmp);
+}
+
+
+/*
+ * inquery_value_gteq() - check if value is greater than or equal to another
+ */
+inline bool inquery_value_gteq(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) >= 0;
+}
+
+
+/*
+ * inquery_value_gt() - check if value is greater than another
+ */
+inline bool inquery_value_gt(const inquery_value *ctx,
+        const inquery_value *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) > 0;
+}
+
+
+/*
  * inquery_value_nil() - check if value is nil
  */
 extern bool inquery_value_nil(const inquery_value *ctx);

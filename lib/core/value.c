@@ -1,3 +1,5 @@
+#include <float.h>
+#include <math.h>
 #include <string.h>
 #include "core.h"
 
@@ -53,10 +55,43 @@ static void payload_free(void *ctx)
 }
 
 
+/*
+ * vtable_init() - initialise payload v-table
+ */
 static void vtable_init(struct inquery_object_vtable *ctx)
 {
     ctx->payload_copy = &payload_copy;
     ctx->payload_free = &payload_free;
+}
+
+
+/*
+ * cmp_int() - compare two integer values
+ */
+static inline int cmp_int(int64_t lhs, int64_t rhs)
+{
+    if (lhs == rhs)
+        return 0;
+
+    if (lhs < rhs)
+        return -1;
+
+    return 1;
+}
+
+
+/*
+ * cmp_real() - compare two real values
+ */
+static inline int cmp_real(double lhs, double rhs)
+{
+    if (fabs(lhs - rhs) < DBL_EPSILON)
+        return 0;
+
+    if (fabs(rhs - lhs) > DBL_EPSILON)
+        return -1;
+
+    return 1;
 }
 
 
@@ -138,6 +173,66 @@ extern enum inquery_value_type inquery_value_type(const inquery_value *ctx)
     const struct payload *payload = inquery_object_payload(ctx);
     return payload->type;
 }
+
+
+/*
+ * inquery_value_cmp() - comnpare two values
+ */
+extern int inquery_value_cmp(const inquery_value *ctx, 
+        const inquery_value *cmp)
+{
+    inquery_assert (ctx && cmp);
+    inquery_assert (inquery_value_type(ctx) && inquery_value_type(cmp));
+    inquery_assert (inquery_value_type(ctx) == inquery_value_type(cmp));
+
+    const struct payload *ctxl = inquery_object_payload(ctx);
+    const struct payload *cmpl = inquery_object_payload(cmp);
+
+    if (ctxl->type == INQUERY_VALUE_TYPE_INT)
+        return cmp_int(*((int64_t *) ctxl->value), *((int64_t *) cmpl->value));
+
+    if (ctxl->type == INQUERY_VALUE_TYPE_TEXT) {
+        return inquery_string_cmp((inquery_string *) ctxl->value,
+                (inquery_string *) cmpl->value);
+    }
+
+    return cmp_real(*((double *) ctxl->value), *((double *) cmpl->value));
+}
+
+
+/*
+ * inquery_value_lt() - check if value is less than another
+ */
+extern inline bool inquery_value_lt(const inquery_value *ctx, 
+        const inquery_value *cmp);
+
+
+/*
+ * inquery_value_lteq() - check if value is less than or equal to another
+ */
+extern inline bool inquery_value_lteq(const inquery_value *ctx,
+        const inquery_value *cmp);
+
+
+/*
+ * inquery_value_eq() - check if value is equal to another
+ */
+extern inline bool inquery_value_eq(const inquery_value *ctx,
+        const inquery_value *cmp);
+
+
+/*
+ * inquery_value_gteq() - check if value is greater than or equal to another
+ */
+extern inline bool inquery_value_gteq(const inquery_value *ctx,
+        const inquery_value *cmp);
+
+
+/*
+ * inquery_value_gt() - check if value is greater than another
+ */
+extern inline bool inquery_value_gt(const inquery_value *ctx,
+        const inquery_value *cmp);
 
 
 /*
