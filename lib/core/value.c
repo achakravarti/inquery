@@ -83,12 +83,14 @@ static inline int cmp_int(int64_t lhs, int64_t rhs)
 /*
  * cmp_real() - compare two real values
  */
-static inline int cmp_real(double lhs, double rhs)
+static inline int cmp_real(double a, double b)
 {
-    if (fabs(lhs - rhs) < DBL_EPSILON)
+    /* https://stackoverflow.com/questions/17333 */
+
+    if (fabs(a - b) <= ( (fabs(a) > fabs(b) ? fabs(b) : fabs(a)) * DBL_EPSILON))
         return 0;
 
-    if (fabs(rhs - lhs) > DBL_EPSILON)
+    if ((b - a) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * DBL_EPSILON))
         return -1;
 
     return 1;
