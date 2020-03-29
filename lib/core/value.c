@@ -1,3 +1,4 @@
+#include <inttypes.h>
 #include <float.h>
 #include <math.h>
 #include <string.h>
@@ -289,4 +290,44 @@ extern inquery_string *inquery_value_text(const inquery_value *ctx)
 
     return inquery_string_copy((inquery_string *) payload->value);
 }
+
+
+/*
+ * inquery_value_string() - get string representation of value
+ */
+extern inquery_string *inquery_value_string(const inquery_value *ctx)
+{
+    inquery_assert (ctx);
+
+    const struct payload *payload = inquery_object_payload(ctx);
+
+    switch (payload->type) {
+        case INQUERY_VALUE_TYPE_NIL:
+            return inquery_string_new("(nil)");
+
+        case INQUERY_VALUE_TYPE_INT: {
+            int64_t val = *((int64_t *) payload->value);
+            size_t len = snprintf(NULL, 0, "%"PRId64, val) + 1;
+
+            inquery_string *str = inquery_heap_new(sizeof *str * len);
+            (void) snprintf(str, len, "%"PRId64, val);
+    
+            return str;
+        }
+
+        case INQUERY_VALUE_TYPE_REAL: {
+            double val = *((double *) payload->value);
+            size_t len = snprintf(NULL, 0, "%lf", val) + 1;
+
+            inquery_string *str = inquery_heap_new(sizeof *str * len);
+            snprintf(str, len, "%lf", val);
+
+            return str;
+        }
+
+        default:
+            return inquery_value_text(ctx);
+    }
+}
+
 

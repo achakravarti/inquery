@@ -466,7 +466,7 @@ inline bool inquery_value_gt(const inquery_value *ctx,
 
 
 /*
- * inquery_value_nil() - create new nil value
+ * inquery_value_nil() - check if value is nil
  */
 extern bool inquery_value_nil(const inquery_value *ctx);
 
@@ -487,6 +487,12 @@ extern double inquery_value_real(const inquery_value *ctx);
  * inquery_value_text() - unbox text value
  */
 extern inquery_string *inquery_value_text(const inquery_value *ctx);
+
+
+/*
+ * inquery_value_string() - get string representation of value
+ */
+extern inquery_string *inquery_value_string(const inquery_value *ctx);
 
 
 /*******************************************************************************
