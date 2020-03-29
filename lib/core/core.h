@@ -466,7 +466,7 @@ inline bool inquery_value_gt(const inquery_value *ctx,
 
 
 /*
- * inquery_value_nil() - check if value is nil
+ * inquery_value_nil() - create new nil value
  */
 extern bool inquery_value_nil(const inquery_value *ctx);
 
@@ -499,7 +499,7 @@ typedef inquery_object inquery_attribute;
 #define inquery_attribute_smart inquery_object_smart
 
 extern inquery_attribute *inquery_attribute_new(const inquery_string *key, 
-         inquery_value *val);
+         const inquery_value *val);
 
 inline inquery_attribute *inquery_attribute_copy(const inquery_attribute *ctx)
 {

@@ -98,7 +98,7 @@ static inline int cmp_real(double a, double b)
 
 
 /*
- * inquery_value_nil() - check if value is nil
+ * inquery_value_new() - create new nil value
  */
 extern inquery_value *inquery_value_new(void)
 {
