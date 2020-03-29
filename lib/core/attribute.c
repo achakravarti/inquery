@@ -1,5 +1,3 @@
-#include <string.h>
-#include <inttypes.h>
 #include "core.h"
 
 
@@ -33,26 +31,6 @@ static void payload_free(void *ctx)
     struct payload *hnd = (struct payload *) ctx;
     inquery_string_free(&hnd->key);
     inquery_value_free(&hnd->val);
-}
-
-
-static inquery_string *from_int(int64_t val)
-{
-    size_t len = snprintf(NULL, 0, "%"PRId64, val) + 1;
-    inquery_string *str = inquery_heap_new(sizeof *str * len);
-    (void) snprintf(str, len, "%"PRId64, val);
-
-    return str;
-}
-
-
-static inquery_string *from_real(double val)
-{
-    size_t len = snprintf(NULL, 0, "%lf", val) + 1;
-    inquery_string *str = inquery_heap_new(sizeof *str * len);
-    snprintf(str, len, "%lf", val);
-
-    return str;
 }
 
 
@@ -121,24 +99,21 @@ inquery_string *inquery_attribute_json(const inquery_attribute *ctx)
     inquery_string_add(&json, "\":");
 
     switch (inquery_value_type(payload->val)) {
-        case INQUERY_VALUE_TYPE_NIL: {
-            inquery_string_add(&json, "(nil)");
-        } break;
-
         case INQUERY_VALUE_TYPE_INT: {
-            inquery_string_smart *str = from_int(inquery_value_int(
-                    payload->val));
+            inquery_string_smart *str = inquery_value_string(payload->val);
             inquery_string_add(&json, str);
         } break;
 
         case INQUERY_VALUE_TYPE_REAL: {
-            inquery_string_smart *str = from_real(inquery_value_real(
-                    payload->val));
+            inquery_string_smart *str = inquery_value_string(payload->val);
             inquery_string_add(&json, str);
         } break;
 
         default: {
-            inquery_string_add(&json, inquery_value_text(payload->val));
+            inquery_string_smart *str = inquery_value_string(payload->val);
+            inquery_string_add(&json, "\"");
+            inquery_string_add(&json, str);
+            inquery_string_add(&json, "\"");
         } break;
     }
 
