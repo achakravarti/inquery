@@ -517,13 +517,14 @@ inline void inquery_attribute_free(inquery_attribute **ctx)
     inquery_object_free(ctx);
 }
 
-inquery_string *inquery_attribute_key(const inquery_attribute *ctx);
+extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx);
 
-inquery_value *inquery_attribute_value(const inquery_attribute *ctx);
+extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx);
 
-bool inquery_attribute_nil(const inquery_attribute *ctx);
+extern bool inquery_attribute_nil(const inquery_attribute *ctx);
 
-enum inquery_value_type inquery_attribute_type(const inquery_attribute *ctx);
+extern enum inquery_value_type inquery_attribute_type(
+        const inquery_attribute *ctx);
 
 extern int inquery_attribute_cmp(const inquery_attribute *ctx,
         const inquery_attribute *cmp);
@@ -558,7 +559,7 @@ inline bool inquery_attribute_gt(const inquery_attribute *ctx,
     return inquery_attribute_cmp(ctx, cmp) > 0;
 }
 
-inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
+extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */

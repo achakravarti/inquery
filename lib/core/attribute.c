@@ -53,7 +53,7 @@ extern inline inquery_attribute *inquery_attribute_copy(
 extern inline void inquery_attribute_free(inquery_attribute **ctx);
 
 
-inquery_string *inquery_attribute_key(const inquery_attribute *ctx)
+extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx)
 {
     inquery_assert (ctx);
 
@@ -62,7 +62,7 @@ inquery_string *inquery_attribute_key(const inquery_attribute *ctx)
 }
 
 
-inquery_value *inquery_attribute_value(const inquery_attribute *ctx)
+extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx)
 {
     inquery_assert (ctx);
 
@@ -71,7 +71,7 @@ inquery_value *inquery_attribute_value(const inquery_attribute *ctx)
 }
 
 
-bool inquery_attribute_nil(const inquery_attribute *ctx)
+extern bool inquery_attribute_nil(const inquery_attribute *ctx)
 {
     inquery_assert (ctx);
 
@@ -79,7 +79,8 @@ bool inquery_attribute_nil(const inquery_attribute *ctx)
     return inquery_value_nil(payload->val);
 }
 
-enum inquery_value_type inquery_attribute_type(const inquery_attribute *ctx)
+extern enum inquery_value_type inquery_attribute_type(
+        const inquery_attribute *ctx)
 {
     inquery_assert (ctx);
 
@@ -123,7 +124,7 @@ extern inline bool inquery_attribute_gt(const inquery_attribute *ctx,
         const inquery_attribute *cmp);
 
 
-inquery_string *inquery_attribute_json(const inquery_attribute *ctx)
+extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx)
 {
     inquery_assert (ctx);
 
