@@ -124,6 +124,20 @@ extern inline bool inquery_attribute_gt(const inquery_attribute *ctx,
         const inquery_attribute *cmp);
 
 
+extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx)
+{
+    const struct payload *payload = inquery_object_payload(ctx);
+
+    inquery_string *str = inquery_string_new(payload->key);
+    inquery_string_add(&str, " = ");
+    
+    inquery_string_smart *val = inquery_value_string(payload->val);
+    inquery_string_add(&str, val);
+
+    return str;
+}
+
+
 extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx)
 {
     inquery_assert (ctx);

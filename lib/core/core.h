@@ -559,6 +559,8 @@ inline bool inquery_attribute_gt(const inquery_attribute *ctx,
     return inquery_attribute_cmp(ctx, cmp) > 0;
 }
 
+extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx);
+
 extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 
