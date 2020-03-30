@@ -525,6 +525,39 @@ bool inquery_attribute_nil(const inquery_attribute *ctx);
 
 enum inquery_value_type inquery_attribute_type(const inquery_attribute *ctx);
 
+extern int inquery_attribute_cmp(const inquery_attribute *ctx,
+        const inquery_attribute *cmp);
+
+inline bool inquery_attribute_lt(const inquery_attribute *ctx, 
+        const inquery_attribute *cmp)
+{
+    return inquery_attribute_cmp(ctx, cmp) < 0;
+}
+
+inline bool inquery_attribute_lteq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return inquery_attribute_cmp(ctx, cmp) <= 0;
+}
+
+inline bool inquery_attribute_eq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return !inquery_attribute_cmp(ctx, cmp);
+}
+
+inline bool inquery_attribute_gteq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return inquery_value_cmp(ctx, cmp) >= 0;
+}
+
+inline bool inquery_attribute_gt(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    return inquery_attribute_cmp(ctx, cmp) > 0;
+}
+
 inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 

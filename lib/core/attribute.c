@@ -88,6 +88,41 @@ enum inquery_value_type inquery_attribute_type(const inquery_attribute *ctx)
 }
 
 
+extern int inquery_attribute_cmp(const inquery_attribute *ctx,
+        const inquery_attribute *cmp)
+{
+    inquery_assert (ctx && cmp);
+    inquery_assert (inquery_attribute_type(ctx) && inquery_attribute_type(cmp));
+    inquery_assert (inquery_attribute_type(ctx) == inquery_attribute_type(cmp));
+
+    const struct payload *ctxl = inquery_object_payload(ctx);
+    const struct payload *cmpl = inquery_object_payload(cmp);
+    inquery_assert (inquery_string_eq(ctxl->key, cmpl->key));
+
+    return inquery_value_cmp(ctxl->val, cmpl->val);
+}
+
+
+extern inline bool inquery_attribute_lt(const inquery_attribute *ctx, 
+        const inquery_attribute *cmp);
+
+
+extern inline bool inquery_attribute_lteq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp);
+
+
+extern inline bool inquery_attribute_eq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp);
+
+
+extern inline bool inquery_attribute_gteq(const inquery_attribute *ctx,
+        const inquery_attribute *cmp);
+
+
+extern inline bool inquery_attribute_gt(const inquery_attribute *ctx,
+        const inquery_attribute *cmp);
+
+
 inquery_string *inquery_attribute_json(const inquery_attribute *ctx)
 {
     inquery_assert (ctx);
