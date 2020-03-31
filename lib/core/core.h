@@ -692,5 +692,31 @@ extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx);
 extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 
+typedef inquery_object inquery_record;
+
+#define inquery_record_smart inquery_object_smart
+
+extern inquery_record *inquery_record_new();
+
+inline inquery_record *inquery_record_copy(const inquery_record *ctx)
+{
+    return inquery_object_copy(ctx);
+}
+
+inline void inquery_record_free(inquery_record **ctx)
+{
+    inquery_object_free(ctx);
+}
+
+extern inquery_attribute *inquery_record_get(const inquery_record *ctx,
+        size_t col);
+
+extern void inquery_record_set(inquery_record **ctx, size_t col,
+        const inquery_attribute *val);
+
+extern size_t inquery_record_len(const inquery_record *ctx);
+
+extern inquery_string *inquery_record_json(const inquery_record *ctx);
+
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
 
