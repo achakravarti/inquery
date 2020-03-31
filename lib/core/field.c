@@ -47,9 +47,9 @@ static void payload_free(void *ctx)
 
 
 /*
- * inquery_attribute_new() - create new attribute
+ * inquery_field_new() - create new attribute
  */
-extern inquery_attribute *inquery_attribute_new(const inquery_string *key, 
+extern inquery_field *inquery_field_new(const inquery_string *key, 
          const inquery_value *val)
 {
     struct inquery_object_vtable vt = {
@@ -62,50 +62,50 @@ extern inquery_attribute *inquery_attribute_new(const inquery_string *key,
 
 
 /*
- * inquery_attribute_new_nil() - create new nil attribute
+ * inquery_field_new_nil() - create new nil attribute
  */
-extern inline inquery_attribute *inquery_attribute_new_nil(
+extern inline inquery_field *inquery_field_new_nil(
         const inquery_string *key);
 
 
 /*
- * inquery_attribute_new_int() - create new date attribute
+ * inquery_field_new_int() - create new date attribute
  */
-extern inline inquery_attribute *inquery_attribute_new_int(
+extern inline inquery_field *inquery_field_new_int(
         const inquery_string *key, int64_t val);
 
 
 /*
- * inquery_attribute_new_real() - create new real attribute
+ * inquery_field_new_real() - create new real attribute
  */
-extern inline inquery_attribute *inquery_attribute_new_real(
+extern inline inquery_field *inquery_field_new_real(
         const inquery_string *key, double val);
 
 
 /*
- * inquery_attribute_new_text() - create new text attribute
+ * inquery_field_new_text() - create new text attribute
  */
-extern inline inquery_attribute *inquery_attribute_new_text(
+extern inline inquery_field *inquery_field_new_text(
         const inquery_string *key, inquery_string *val);
 
 
 /*
- * inquery_attribute_copy() - copy existing attribute
+ * inquery_field_copy() - copy existing attribute
  */
-extern inline inquery_attribute *inquery_attribute_copy(
-        const inquery_attribute *ctx);
+extern inline inquery_field *inquery_field_copy(
+        const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_free() - free attribute from heap
+ * inquery_field_free() - free attribute from heap
  */
-extern inline void inquery_attribute_free(inquery_attribute **ctx);
+extern inline void inquery_field_free(inquery_field **ctx);
 
 
 /*
- * inquery_attribute_key() - get attribute key
+ * inquery_field_key() - get attribute key
  */
-extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx)
+extern inquery_string *inquery_field_key(const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
@@ -115,9 +115,9 @@ extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx)
 
 
 /*
- * inquery_attribute_value() - get attribute value
+ * inquery_field_value() - get attribute value
  */
-extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx)
+extern inquery_value *inquery_field_value(const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
@@ -127,10 +127,10 @@ extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx)
 
 
 /*
- * inquery_attribute_type() - get attribute type
+ * inquery_field_type() - get attribute type
  */
-extern enum inquery_value_type inquery_attribute_type(
-        const inquery_attribute *ctx)
+extern enum inquery_value_type inquery_field_type(
+        const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
@@ -140,14 +140,14 @@ extern enum inquery_value_type inquery_attribute_type(
 
 
 /*
- * inquery_attribute_cmp() - compare two attributes
+ * inquery_field_cmp() - compare two attributes
  */
-extern int inquery_attribute_cmp(const inquery_attribute *ctx,
-        const inquery_attribute *cmp)
+extern int inquery_field_cmp(const inquery_field *ctx,
+        const inquery_field *cmp)
 {
     inquery_assert (ctx && cmp);
-    inquery_assert (inquery_attribute_type(ctx) && inquery_attribute_type(cmp));
-    inquery_assert (inquery_attribute_type(ctx) == inquery_attribute_type(cmp));
+    inquery_assert (inquery_field_type(ctx) && inquery_field_type(cmp));
+    inquery_assert (inquery_field_type(ctx) == inquery_field_type(cmp));
 
     const struct payload *ctxl = inquery_object_payload(ctx);
     const struct payload *cmpl = inquery_object_payload(cmp);
@@ -158,44 +158,44 @@ extern int inquery_attribute_cmp(const inquery_attribute *ctx,
 
 
 /*
- * inquery_attribute_lt() - check if attribute is < another
+ * inquery_field_lt() - check if attribute is < another
  */
-extern inline bool inquery_attribute_lt(const inquery_attribute *ctx, 
-        const inquery_attribute *cmp);
+extern inline bool inquery_field_lt(const inquery_field *ctx, 
+        const inquery_field *cmp);
 
 
 /*
- * inquery_attribute_lteq() - check if attribute is <= another
+ * inquery_field_lteq() - check if attribute is <= another
  */
-extern inline bool inquery_attribute_lteq(const inquery_attribute *ctx,
-        const inquery_attribute *cmp);
+extern inline bool inquery_field_lteq(const inquery_field *ctx,
+        const inquery_field *cmp);
 
 
 /*
- * inquery_attribute_eq() - check if attribute is == another
+ * inquery_field_eq() - check if attribute is == another
  */
-extern inline bool inquery_attribute_eq(const inquery_attribute *ctx,
-        const inquery_attribute *cmp);
+extern inline bool inquery_field_eq(const inquery_field *ctx,
+        const inquery_field *cmp);
 
 
 /*
- * inquery_attribute_gteq() - check if attribute is >= another
+ * inquery_field_gteq() - check if attribute is >= another
  */
-extern inline bool inquery_attribute_gteq(const inquery_attribute *ctx,
-        const inquery_attribute *cmp);
+extern inline bool inquery_field_gteq(const inquery_field *ctx,
+        const inquery_field *cmp);
 
 
 /*
- * inquery_attribute_gt() - check if attribute is > another
+ * inquery_field_gt() - check if attribute is > another
  */
-extern inline bool inquery_attribute_gt(const inquery_attribute *ctx,
-        const inquery_attribute *cmp);
+extern inline bool inquery_field_gt(const inquery_field *ctx,
+        const inquery_field *cmp);
 
 
 /*
- * inquery_attribute_nil() - check if attribute is nil
+ * inquery_field_nil() - check if attribute is nil
  */
-extern bool inquery_attribute_nil(const inquery_attribute *ctx)
+extern bool inquery_field_nil(const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
@@ -205,9 +205,9 @@ extern bool inquery_attribute_nil(const inquery_attribute *ctx)
 
 
 /*
- * inquery_attribute_int() - unbox integer attribute
+ * inquery_field_int() - unbox integer attribute
  */
-extern int64_t inquery_attribute_int(const inquery_attribute *ctx)
+extern int64_t inquery_field_int(const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
@@ -217,9 +217,9 @@ extern int64_t inquery_attribute_int(const inquery_attribute *ctx)
 
 
 /*
- * inquery_attribute_real() - unbox real attribute
+ * inquery_field_real() - unbox real attribute
  */
-extern double inquery_attribute_real(const inquery_attribute *ctx)
+extern double inquery_field_real(const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
@@ -229,9 +229,9 @@ extern double inquery_attribute_real(const inquery_attribute *ctx)
 
 
 /*
- * inquery_attribute_text() - unbox text attribute
+ * inquery_field_text() - unbox text attribute
  */
-extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx)
+extern inquery_string *inquery_field_text(const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
@@ -241,9 +241,9 @@ extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx)
 
 
 /*
- * inquery_attribute_string() - represent attribute as string
+ * inquery_field_string() - represent attribute as string
  */
-extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx)
+extern inquery_string *inquery_field_string(const inquery_field *ctx)
 {
     const struct payload *payload = inquery_object_payload(ctx);
     return inquery_value_string(payload->val);
@@ -251,9 +251,9 @@ extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx)
 
 
 /*
- * inquery_attribute_json() - represent attribute as JSON
+ * inquery_field_json() - represent attribute as JSON
  */
-extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx)
+extern inquery_string *inquery_field_json(const inquery_field *ctx)
 {
     inquery_assert (ctx);
 
