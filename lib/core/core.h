@@ -507,6 +507,33 @@ typedef inquery_object inquery_attribute;
 extern inquery_attribute *inquery_attribute_new(const inquery_string *key, 
          const inquery_value *val);
 
+inline inquery_attribute *inquery_attribute_new_nil(const inquery_string *key)
+{
+    inquery_value_smart *val = inquery_value_new();
+    return inquery_attribute_new(key, val);
+}
+
+inline inquery_attribute *inquery_attribute_new_int(const inquery_string *key,
+        int64_t val)
+{
+    inquery_value_smart *v = inquery_value_new_int(val);
+    return inquery_attribute_new(key, v);
+}
+
+inline inquery_attribute *inquery_attribute_new_real(const inquery_string *key,
+        double val)
+{
+    inquery_value_smart *v = inquery_value_new_real(val);
+    return inquery_attribute_new(key, v);
+}
+
+inline inquery_attribute *inquery_attribute_new_text(const inquery_string *key,
+        inquery_string *val)
+{
+    inquery_value_smart *v = inquery_value_new_text(val);
+    return inquery_attribute_new(key, v);
+}
+
 inline inquery_attribute *inquery_attribute_copy(const inquery_attribute *ctx)
 {
     return inquery_object_copy(ctx);

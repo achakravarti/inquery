@@ -46,6 +46,22 @@ extern inquery_attribute *inquery_attribute_new(const inquery_string *key,
 }
 
 
+extern inline inquery_attribute *inquery_attribute_new_nil(
+        const inquery_string *key);
+
+
+extern inline inquery_attribute *inquery_attribute_new_int(
+        const inquery_string *key, int64_t val);
+
+
+extern inline inquery_attribute *inquery_attribute_new_real(
+        const inquery_string *key, double val);
+
+
+extern inline inquery_attribute *inquery_attribute_new_text(
+        const inquery_string *key, inquery_string *val);
+
+
 extern inline inquery_attribute *inquery_attribute_copy(
         const inquery_attribute *ctx);
 
