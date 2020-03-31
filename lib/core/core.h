@@ -500,19 +500,38 @@ extern inquery_string *inquery_value_string(const inquery_value *ctx);
  */
 
 
+/*
+ * inquery_attribute - entity attribute
+ */
 typedef inquery_object inquery_attribute;
 
+
+/*
+ * inquery_attribute_smart - smart attribute
+ */
 #define inquery_attribute_smart inquery_object_smart
 
+
+/*
+ * inquery_attribute_new() - create new attribute
+ */
 extern inquery_attribute *inquery_attribute_new(const inquery_string *key, 
          const inquery_value *val);
 
+
+/*
+ * inquery_attribute_new_nil() - create new nil attribute
+ */
 inline inquery_attribute *inquery_attribute_new_nil(const inquery_string *key)
 {
     inquery_value_smart *val = inquery_value_new();
     return inquery_attribute_new(key, val);
 }
 
+
+/*
+ * inquery_attribute_new_int() - create new date attribute
+ */
 inline inquery_attribute *inquery_attribute_new_int(const inquery_string *key,
         int64_t val)
 {
@@ -520,6 +539,10 @@ inline inquery_attribute *inquery_attribute_new_int(const inquery_string *key,
     return inquery_attribute_new(key, v);
 }
 
+
+/*
+ * inquery_attribute_new_real() - create new real attribute
+ */
 inline inquery_attribute *inquery_attribute_new_real(const inquery_string *key,
         double val)
 {
@@ -527,6 +550,10 @@ inline inquery_attribute *inquery_attribute_new_real(const inquery_string *key,
     return inquery_attribute_new(key, v);
 }
 
+
+/*
+ * inquery_attribute_new_text() - create new text attribute
+ */
 inline inquery_attribute *inquery_attribute_new_text(const inquery_string *key,
         inquery_string *val)
 {
@@ -534,66 +561,134 @@ inline inquery_attribute *inquery_attribute_new_text(const inquery_string *key,
     return inquery_attribute_new(key, v);
 }
 
+
+/*
+ * inquery_attribute_copy() - copy existing attribute
+ */
 inline inquery_attribute *inquery_attribute_copy(const inquery_attribute *ctx)
 {
     return inquery_object_copy(ctx);
 }
 
+
+/*
+ * inquery_attribute_free() - free attribute from heap
+ */
 inline void inquery_attribute_free(inquery_attribute **ctx)
 {
     inquery_object_free(ctx);
 }
 
+
+/*
+ * inquery_attribute_key() - get attribute key
+ */
 extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_value() - get attribute value
+ */
 extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_type() - get attribute type
+ */
 extern enum inquery_value_type inquery_attribute_type(
         const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_cmp() - compare two attributes
+ */
 extern int inquery_attribute_cmp(const inquery_attribute *ctx,
         const inquery_attribute *cmp);
 
+
+/*
+ * inquery_attribute_lt() - check if attribute is < another
+ */
 inline bool inquery_attribute_lt(const inquery_attribute *ctx, 
         const inquery_attribute *cmp)
 {
     return inquery_attribute_cmp(ctx, cmp) < 0;
 }
 
+
+/*
+ * inquery_attribute_lteq() - check if attribute is <= another
+ */
 inline bool inquery_attribute_lteq(const inquery_attribute *ctx,
         const inquery_attribute *cmp)
 {
     return inquery_attribute_cmp(ctx, cmp) <= 0;
 }
 
+
+/*
+ * inquery_attribute_eq() - check if attribute is == another
+ */
 inline bool inquery_attribute_eq(const inquery_attribute *ctx,
         const inquery_attribute *cmp)
 {
     return !inquery_attribute_cmp(ctx, cmp);
 }
 
+
+/*
+ * inquery_attribute_gteq() - check if attribute is >= another
+ */
 inline bool inquery_attribute_gteq(const inquery_attribute *ctx,
         const inquery_attribute *cmp)
 {
     return inquery_value_cmp(ctx, cmp) >= 0;
 }
 
+
+/*
+ * inquery_attribute_gt() - check if attribute is > another
+ */
 inline bool inquery_attribute_gt(const inquery_attribute *ctx,
         const inquery_attribute *cmp)
 {
     return inquery_attribute_cmp(ctx, cmp) > 0;
 }
 
+
+/*
+ * inquery_attribute_nil() - check if attribute is nil
+ */
 extern bool inquery_attribute_nil(const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_int() - unbox integer attribute
+ */
 extern int64_t inquery_attribute_int(const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_real() - unbox real attribute
+ */
 extern double inquery_attribute_real(const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_text() - unbox text attribute
+ */
 extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_string() - represent attribute as string
+ */
 extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx);
 
+
+/*
+ * inquery_attribute_json() - represent attribute as JSON
+ */
 extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 
