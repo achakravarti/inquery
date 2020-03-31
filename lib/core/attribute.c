@@ -171,14 +171,7 @@ extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx)
 extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx)
 {
     const struct payload *payload = inquery_object_payload(ctx);
-
-    inquery_string *str = inquery_string_new(payload->key);
-    inquery_string_add(&str, " = ");
-    
-    inquery_string_smart *val = inquery_value_string(payload->val);
-    inquery_string_add(&str, val);
-
-    return str;
+    return inquery_value_string(ctx);
 }
 
 
