@@ -548,8 +548,6 @@ extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx);
 
 extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx);
 
-extern bool inquery_attribute_nil(const inquery_attribute *ctx);
-
 extern enum inquery_value_type inquery_attribute_type(
         const inquery_attribute *ctx);
 
@@ -585,6 +583,14 @@ inline bool inquery_attribute_gt(const inquery_attribute *ctx,
 {
     return inquery_attribute_cmp(ctx, cmp) > 0;
 }
+
+extern bool inquery_attribute_nil(const inquery_attribute *ctx);
+
+extern int64_t inquery_attribute_int(const inquery_attribute *ctx);
+
+extern double inquery_attribute_real(const inquery_attribute *ctx);
+
+extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx);
 
 extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx);
 

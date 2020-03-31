@@ -87,14 +87,6 @@ extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx)
 }
 
 
-extern bool inquery_attribute_nil(const inquery_attribute *ctx)
-{
-    inquery_assert (ctx);
-
-    const struct payload *payload = inquery_object_payload(ctx);
-    return inquery_value_nil(payload->val);
-}
-
 extern enum inquery_value_type inquery_attribute_type(
         const inquery_attribute *ctx)
 {
@@ -138,6 +130,42 @@ extern inline bool inquery_attribute_gteq(const inquery_attribute *ctx,
 
 extern inline bool inquery_attribute_gt(const inquery_attribute *ctx,
         const inquery_attribute *cmp);
+
+
+extern bool inquery_attribute_nil(const inquery_attribute *ctx)
+{
+    inquery_assert (ctx);
+
+    const struct payload *payload = inquery_object_payload(ctx);
+    return inquery_value_nil(payload->val);
+}
+
+
+extern int64_t inquery_attribute_int(const inquery_attribute *ctx)
+{
+    inquery_assert (ctx);
+
+    const struct payload *payload = inquery_object_payload(ctx);
+    return inquery_value_int(payload->val);
+}
+
+
+extern double inquery_attribute_real(const inquery_attribute *ctx)
+{
+    inquery_assert (ctx);
+
+    const struct payload *payload = inquery_object_payload(ctx);
+    return inquery_value_real(payload->val);
+}
+
+
+extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx)
+{
+    inquery_assert (ctx);
+
+    const struct payload *payload = inquery_object_payload(ctx);
+    return inquery_value_text(payload->val);
+}
 
 
 extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx)
