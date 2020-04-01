@@ -696,7 +696,8 @@ typedef inquery_object inquery_record;
 
 #define inquery_record_smart inquery_object_smart
 
-extern inquery_record *inquery_record_new();
+extern inquery_record *inquery_record_new(const inquery_attribute **attr,
+        size_t len);
 
 inline inquery_record *inquery_record_copy(const inquery_record *ctx)
 {
