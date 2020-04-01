@@ -1,4 +1,3 @@
-#include <string.h>
 #include "core.h"
 
 
@@ -10,11 +9,14 @@ struct payload {
 
 static struct payload *payload_new(const inquery_attribute **attr, size_t len)
 {
-    size_t sz = sizeof *attr * len;
-    struct payload *ctx = inquery_heap_new(sz);
-
+    struct payload *ctx = inquery_heap_new(sizeof *ctx);
     ctx->len = len;
-    memcpy(ctx->attr, attr, sz);
+
+    size_t sz = sizeof *attr * len;
+    ctx->attr = inquery_heap_new(sz);
+   
+    for (register size_t i = 0; i < len; i++)
+        ctx->attr[i] = inquery_attribute_copy(attr[i]);
 
     return ctx;
 }
@@ -34,7 +36,7 @@ static void payload_free(void *ctx)
     for (register size_t i = 0; i < hnd->len; i++)
         inquery_attribute_free(&hnd->attr[i]);
 
-    inquery_heap_free((void **) hnd->attr);
+    inquery_heap_free((void **) &hnd->attr);
 }
 
 
@@ -75,7 +77,8 @@ extern void inquery_record_set(inquery_record **ctx, size_t col,
     struct payload *payload = inquery_object_payload_mutable(ctx);
 
     inquery_assert (col && col <= payload->len && val);
-    payload->attr[col - 1]  = inquery_attribute_copy(val);
+    inquery_attribute_free(&payload->attr[--col]);
+    payload->attr[col] = inquery_attribute_copy(val);
 }
 
 
@@ -93,15 +96,20 @@ extern inquery_string *inquery_record_json(const inquery_record *ctx)
     const struct payload *payload = inquery_object_payload(ctx);
 
     inquery_string *json = inquery_string_new("{");
+    inquery_string *attrjson;
 
     if (inquery_likely (payload->len)) {
         register size_t i = 0, end = payload->len - 1;
         for (; i < end; i++) {
-            inquery_string_add(&json, inquery_attribute_json(payload->attr[i]));
+            attrjson = inquery_attribute_json(payload->attr[i]);
+            inquery_string_add(&json, attrjson);
             inquery_string_add(&json, ",");
+            inquery_string_free(&attrjson);
         }
 
-        inquery_string_add(&json, inquery_attribute_json(payload->attr[end]));
+        attrjson = inquery_attribute_json(payload->attr[end]);
+        inquery_string_add(&json, attrjson);
+        inquery_string_free(&attrjson);
     }
 
     inquery_string_add(&json, "}");

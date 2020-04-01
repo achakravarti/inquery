@@ -119,7 +119,7 @@ static void eq_1(void)
             " to another");
 
     inquery_attribute_smart *lhs = inquery_attribute_new_int("test", -555);
-    inquery_attribute_smart *rhs = inquery_attribute_new_int("test", -555);
+    inquery_attribute_smart *rhs = inquery_attribute_new_int("test", -555.55);
     inquery_require (inquery_attribute_eq(lhs, rhs));
 
     printf("...OK\n");

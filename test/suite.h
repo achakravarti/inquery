@@ -31,5 +31,11 @@ extern void inquery_test_suite_value(void);
 extern void inquery_test_suite_attribute(void);
 
 
+/*
+ * inquery_test_suite_record() - record interface test suite
+ */
+extern void inquery_test_suite_record(void);
+
+
 #endif /* INQUERY_TEST_SUITE_HEADER */
 
