@@ -804,16 +804,31 @@ extern size_t inquery_table_len(const inquery_table *ctx);
 
 
 /*
- * inquery_table_get() - get table record
+ * inquery_table_record() - get table record
  */
-extern inquery_record *inquery_table_get(const inquery_table *ctx, size_t col);
+extern inquery_record *inquery_table_record(const inquery_table *ctx, 
+        size_t row);
 
 
 /*
- * inquery_table_set() - set table record
+ * inquery_table_record_set() - set table record
  */
-extern void inquery_table_set(inquery_table **ctx, size_t col, 
+extern void inquery_table_record_set(inquery_table **ctx, size_t row, 
         const inquery_record *val);
+
+
+/*
+ * inquery_table_field() - get table field
+ */
+extern inquery_field *inquery_table_field(const inquery_table *ctx, size_t row,
+        size_t col);
+
+
+/*
+ * inquery_table_field_set() - set table field
+ */
+extern void inquery_table_field_set(inquery_table **ctx, size_t row, size_t col,
+        const inquery_field *val);
 
 
 /*
