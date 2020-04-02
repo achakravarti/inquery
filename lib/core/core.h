@@ -501,195 +501,195 @@ extern inquery_string *inquery_value_string(const inquery_value *ctx);
 
 
 /*
- * inquery_attribute - entity attribute
+ * inquery_field - database field
  */
-typedef inquery_object inquery_attribute;
+typedef inquery_object inquery_field;
 
 
 /*
- * inquery_attribute_smart - smart attribute
+ * inquery_field_smart - smart field
  */
-#define inquery_attribute_smart inquery_object_smart
+#define inquery_field_smart inquery_object_smart
 
 
 /*
- * inquery_attribute_new() - create new attribute
+ * inquery_field_new() - create new field
  */
-extern inquery_attribute *inquery_attribute_new(const inquery_string *key, 
+extern inquery_field *inquery_field_new(const inquery_string *key, 
          const inquery_value *val);
 
 
 /*
- * inquery_attribute_new_nil() - create new nil attribute
+ * inquery_field_new_nil() - create new nil field
  */
-inline inquery_attribute *inquery_attribute_new_nil(const inquery_string *key)
+inline inquery_field *inquery_field_new_nil(const inquery_string *key)
 {
     inquery_value_smart *val = inquery_value_new();
-    return inquery_attribute_new(key, val);
+    return inquery_field_new(key, val);
 }
 
 
 /*
- * inquery_attribute_new_int() - create new date attribute
+ * inquery_field_new_int() - create new date field
  */
-inline inquery_attribute *inquery_attribute_new_int(const inquery_string *key,
+inline inquery_field *inquery_field_new_int(const inquery_string *key,
         int64_t val)
 {
     inquery_value_smart *v = inquery_value_new_int(val);
-    return inquery_attribute_new(key, v);
+    return inquery_field_new(key, v);
 }
 
 
 /*
- * inquery_attribute_new_real() - create new real attribute
+ * inquery_field_new_real() - create new real field
  */
-inline inquery_attribute *inquery_attribute_new_real(const inquery_string *key,
+inline inquery_field *inquery_field_new_real(const inquery_string *key,
         double val)
 {
     inquery_value_smart *v = inquery_value_new_real(val);
-    return inquery_attribute_new(key, v);
+    return inquery_field_new(key, v);
 }
 
 
 /*
- * inquery_attribute_new_text() - create new text attribute
+ * inquery_field_new_text() - create new text field
  */
-inline inquery_attribute *inquery_attribute_new_text(const inquery_string *key,
+inline inquery_field *inquery_field_new_text(const inquery_string *key,
         inquery_string *val)
 {
     inquery_value_smart *v = inquery_value_new_text(val);
-    return inquery_attribute_new(key, v);
+    return inquery_field_new(key, v);
 }
 
 
 /*
- * inquery_attribute_copy() - copy existing attribute
+ * inquery_field_copy() - copy existing field
  */
-inline inquery_attribute *inquery_attribute_copy(const inquery_attribute *ctx)
+inline inquery_field *inquery_field_copy(const inquery_field *ctx)
 {
     return inquery_object_copy(ctx);
 }
 
 
 /*
- * inquery_attribute_free() - free attribute from heap
+ * inquery_field_free() - free field from heap
  */
-inline void inquery_attribute_free(inquery_attribute **ctx)
+inline void inquery_field_free(inquery_field **ctx)
 {
     inquery_object_free(ctx);
 }
 
 
 /*
- * inquery_attribute_key() - get attribute key
+ * inquery_field_key() - get field key
  */
-extern inquery_string *inquery_attribute_key(const inquery_attribute *ctx);
+extern inquery_string *inquery_field_key(const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_value() - get attribute value
+ * inquery_field_value() - get field value
  */
-extern inquery_value *inquery_attribute_value(const inquery_attribute *ctx);
+extern inquery_value *inquery_field_value(const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_type() - get attribute type
+ * inquery_field_type() - get field type
  */
-extern enum inquery_value_type inquery_attribute_type(
-        const inquery_attribute *ctx);
+extern enum inquery_value_type inquery_field_type(
+        const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_cmp() - compare two attributes
+ * inquery_field_cmp() - compare two fields
  */
-extern int inquery_attribute_cmp(const inquery_attribute *ctx,
-        const inquery_attribute *cmp);
+extern int inquery_field_cmp(const inquery_field *ctx,
+        const inquery_field *cmp);
 
 
 /*
- * inquery_attribute_lt() - check if attribute is < another
+ * inquery_field_lt() - check if field is < another
  */
-inline bool inquery_attribute_lt(const inquery_attribute *ctx, 
-        const inquery_attribute *cmp)
+inline bool inquery_field_lt(const inquery_field *ctx, 
+        const inquery_field *cmp)
 {
-    return inquery_attribute_cmp(ctx, cmp) < 0;
+    return inquery_field_cmp(ctx, cmp) < 0;
 }
 
 
 /*
- * inquery_attribute_lteq() - check if attribute is <= another
+ * inquery_field_lteq() - check if field is <= another
  */
-inline bool inquery_attribute_lteq(const inquery_attribute *ctx,
-        const inquery_attribute *cmp)
+inline bool inquery_field_lteq(const inquery_field *ctx,
+        const inquery_field *cmp)
 {
-    return inquery_attribute_cmp(ctx, cmp) <= 0;
+    return inquery_field_cmp(ctx, cmp) <= 0;
 }
 
 
 /*
- * inquery_attribute_eq() - check if attribute is == another
+ * inquery_field_eq() - check if field is == another
  */
-inline bool inquery_attribute_eq(const inquery_attribute *ctx,
-        const inquery_attribute *cmp)
+inline bool inquery_field_eq(const inquery_field *ctx,
+        const inquery_field *cmp)
 {
-    return !inquery_attribute_cmp(ctx, cmp);
+    return !inquery_field_cmp(ctx, cmp);
 }
 
 
 /*
- * inquery_attribute_gteq() - check if attribute is >= another
+ * inquery_field_gteq() - check if field is >= another
  */
-inline bool inquery_attribute_gteq(const inquery_attribute *ctx,
-        const inquery_attribute *cmp)
+inline bool inquery_field_gteq(const inquery_field *ctx,
+        const inquery_field *cmp)
 {
     return inquery_value_cmp(ctx, cmp) >= 0;
 }
 
 
 /*
- * inquery_attribute_gt() - check if attribute is > another
+ * inquery_field_gt() - check if field is > another
  */
-inline bool inquery_attribute_gt(const inquery_attribute *ctx,
-        const inquery_attribute *cmp)
+inline bool inquery_field_gt(const inquery_field *ctx,
+        const inquery_field *cmp)
 {
-    return inquery_attribute_cmp(ctx, cmp) > 0;
+    return inquery_field_cmp(ctx, cmp) > 0;
 }
 
 
 /*
- * inquery_attribute_nil() - check if attribute is nil
+ * inquery_field_nil() - check if field is nil
  */
-extern bool inquery_attribute_nil(const inquery_attribute *ctx);
+extern bool inquery_field_nil(const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_int() - unbox integer attribute
+ * inquery_field_int() - unbox integer field
  */
-extern int64_t inquery_attribute_int(const inquery_attribute *ctx);
+extern int64_t inquery_field_int(const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_real() - unbox real attribute
+ * inquery_field_real() - unbox real field
  */
-extern double inquery_attribute_real(const inquery_attribute *ctx);
+extern double inquery_field_real(const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_text() - unbox text attribute
+ * inquery_field_text() - unbox text field
  */
-extern inquery_string *inquery_attribute_text(const inquery_attribute *ctx);
+extern inquery_string *inquery_field_text(const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_string() - represent attribute as string
+ * inquery_field_string() - represent field as string
  */
-extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx);
+extern inquery_string *inquery_field_string(const inquery_field *ctx);
 
 
 /*
- * inquery_attribute_json() - represent attribute as JSON
+ * inquery_field_json() - represent field as JSON
  */
-extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
+extern inquery_string *inquery_field_json(const inquery_field *ctx);
 
 
 /*
@@ -707,7 +707,7 @@ typedef inquery_object inquery_record;
 /*
  * inquery_record_new() - create new record
  */
-extern inquery_record *inquery_record_new(const inquery_attribute **attr,
+extern inquery_record *inquery_record_new(const inquery_field **fld,
         size_t len);
 
 
@@ -736,17 +736,17 @@ extern size_t inquery_record_len(const inquery_record *ctx);
 
 
 /*
- * inquery_record_get() - get record attribute
+ * inquery_record_get() - get record field
  */
-extern inquery_attribute *inquery_record_get(const inquery_record *ctx,
+extern inquery_field *inquery_record_get(const inquery_record *ctx,
         size_t col);
 
 
 /*
- * inquery_record_set() - set record attribute
+ * inquery_record_set() - set record field
  */
 extern void inquery_record_set(inquery_record **ctx, size_t col,
-        const inquery_attribute *val);
+        const inquery_field *val);
 
 
 /*

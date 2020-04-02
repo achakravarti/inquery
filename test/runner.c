@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     inquery_test_suite_string();
     inquery_test_suite_object();
     inquery_test_suite_value();
-    inquery_test_suite_attribute();
+    inquery_test_suite_field();
     inquery_test_suite_record();
 
     return 0;

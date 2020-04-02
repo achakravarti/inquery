@@ -3,29 +3,29 @@
 
 
 /*
- * attrib_int() - create sample int attribute
+ * sample_int() - create sample integer field
  */
-static inquery_attribute *attrib_int(void)
+static inquery_field *sample_int(void)
 {
-    return inquery_attribute_new_int("int", 555);
+    return inquery_field_new_int("int", 555);
 }
 
 
 /*
- * attrib_real() - create sample real attribute
+ * sample_real() - create sample real field
  */
-static inquery_attribute *attrib_real(void)
+static inquery_field *sample_real(void)
 {
-    return inquery_attribute_new_real("real", -666.66);
+    return inquery_field_new_real("real", -666.66);
 }
 
 
 /*
- * attrib_text() - create sample text attribute
+ * sample_text() - create sample text field
  */
-static inquery_attribute *attrib_text(void)
+static inquery_field *sample_text(void)
 {
-    return inquery_attribute_new_text("text", "test");
+    return inquery_field_new_text("text", "test");
 }
 
 
@@ -36,27 +36,27 @@ static void new_1(void)
 {
     printf("inquery_record new() creates a new record");
 
-    inquery_attribute_smart *iattr = attrib_int();
-    inquery_attribute_smart *rattr = attrib_real();
-    inquery_attribute_smart *tattr = attrib_text();
+    inquery_field_smart *ifld = sample_int();
+    inquery_field_smart *rfld = sample_real();
+    inquery_field_smart *tfld = sample_text();
 
-    const inquery_attribute *attr[] = {
-        iattr,
-        rattr,
-        tattr
+    const inquery_field *fld[] = {
+        ifld,
+        rfld,
+        tfld
     };
 
-    size_t len = sizeof attr / sizeof *attr;
-    inquery_record_smart *rec = inquery_record_new(attr, len);
+    size_t len = sizeof fld / sizeof *fld;
+    inquery_record_smart *rec = inquery_record_new(fld, len);
     inquery_require (inquery_record_len(rec) == len);
 
-    inquery_attribute_smart *attr1 = inquery_record_get(rec, 1);
-    inquery_attribute_smart *attr2 = inquery_record_get(rec, 2);
-    inquery_attribute_smart *attr3 = inquery_record_get(rec, 3);
+    inquery_field_smart *fld1 = inquery_record_get(rec, 1);
+    inquery_field_smart *fld2 = inquery_record_get(rec, 2);
+    inquery_field_smart *fld3 = inquery_record_get(rec, 3);
 
-    inquery_require (inquery_attribute_eq(attr1, iattr));
-    inquery_require (inquery_attribute_eq(attr2, rattr));
-    inquery_require (inquery_attribute_eq(attr3, tattr));
+    inquery_require (inquery_field_eq(fld1, ifld));
+    inquery_require (inquery_field_eq(fld2, rfld));
+    inquery_require (inquery_field_eq(fld3, tfld));
 
     printf("...OK\n");
 }
@@ -69,28 +69,28 @@ static void copy_1(void)
 {
     printf("inquery_record_copy() creates a copy of an existing record");
 
-    inquery_attribute_smart *iattr = attrib_int();
-    inquery_attribute_smart *rattr = attrib_real();
-    inquery_attribute_smart *tattr = attrib_text();
+    inquery_field_smart *ifld = sample_int();
+    inquery_field_smart *rfld = sample_real();
+    inquery_field_smart *tfld = sample_text();
 
-    const inquery_attribute *attr[] = {
-        iattr,
-        rattr,
-        tattr
+    const inquery_field *fld[] = {
+        ifld,
+        rfld,
+        tfld
     };
 
-    size_t len = sizeof attr / sizeof *attr;
-    inquery_record_smart *ctx = inquery_record_new(attr, len);
+    size_t len = sizeof fld / sizeof *fld;
+    inquery_record_smart *ctx = inquery_record_new(fld, len);
     inquery_record_smart *cp = inquery_record_copy(ctx);
     inquery_require (inquery_record_len(cp) == len);
 
-    inquery_attribute_smart *attr1 = inquery_record_get(cp, 1);
-    inquery_attribute_smart *attr2 = inquery_record_get(cp, 2);
-    inquery_attribute_smart *attr3 = inquery_record_get(cp, 3);
+    inquery_field_smart *fld1 = inquery_record_get(cp, 1);
+    inquery_field_smart *fld2 = inquery_record_get(cp, 2);
+    inquery_field_smart *fld3 = inquery_record_get(cp, 3);
 
-    inquery_require (inquery_attribute_eq(attr1, iattr));
-    inquery_require (inquery_attribute_eq(attr2, rattr));
-    inquery_require (inquery_attribute_eq(attr3, tattr));
+    inquery_require (inquery_field_eq(fld1, ifld));
+    inquery_require (inquery_field_eq(fld2, rfld));
+    inquery_require (inquery_field_eq(fld3, tfld));
 
     printf("...OK\n");
 }
@@ -101,29 +101,29 @@ static void copy_1(void)
  */
 static void set_1(void)
 {
-    printf("inquery_record_set() updates a record attribute");
+    printf("inquery_record_set() updates a record field");
 
-    inquery_attribute_smart *iattr = attrib_int();
-    inquery_attribute_smart *rattr = attrib_real();
-    inquery_attribute_smart *tattr = attrib_text();
+    inquery_field_smart *ifld = sample_int();
+    inquery_field_smart *rfld = sample_real();
+    inquery_field_smart *tfld = sample_text();
 
-    const inquery_attribute *attr[] = {
-        iattr,
-        iattr,
-        tattr
+    const inquery_field *fld[] = {
+        ifld,
+        ifld,
+        tfld
     };
 
-    size_t len = sizeof attr / sizeof *attr;
-    inquery_record_smart *ctx = inquery_record_new(attr, len);
-    inquery_record_set(&ctx, 2, rattr);
+    size_t len = sizeof fld / sizeof *fld;
+    inquery_record_smart *ctx = inquery_record_new(fld, len);
+    inquery_record_set(&ctx, 2, rfld);
 
-    inquery_attribute_smart *attr1 = inquery_record_get(ctx, 1);
-    inquery_attribute_smart *attr2 = inquery_record_get(ctx, 2);
-    inquery_attribute_smart *attr3 = inquery_record_get(ctx, 3);
+    inquery_field_smart *fld1 = inquery_record_get(ctx, 1);
+    inquery_field_smart *fld2 = inquery_record_get(ctx, 2);
+    inquery_field_smart *fld3 = inquery_record_get(ctx, 3);
 
-    inquery_require (inquery_attribute_eq(attr1, iattr));
-    inquery_require (inquery_attribute_eq(attr2, rattr));
-    inquery_require (inquery_attribute_eq(attr3, tattr));
+    inquery_require (inquery_field_eq(fld1, ifld));
+    inquery_require (inquery_field_eq(fld2, rfld));
+    inquery_require (inquery_field_eq(fld3, tfld));
 
     printf("...OK\n");
 }
@@ -136,18 +136,18 @@ static void json_1(void)
 {
     printf("inquery_record_json() correctly represents a record");
 
-    inquery_attribute_smart *iattr = attrib_int();
-    inquery_attribute_smart *rattr = attrib_real();
-    inquery_attribute_smart *tattr = attrib_text();
+    inquery_field_smart *ifld = sample_int();
+    inquery_field_smart *rfld = sample_real();
+    inquery_field_smart *tfld = sample_text();
 
-    const inquery_attribute *attr[] = {
-        iattr,
-        rattr,
-        tattr
+    const inquery_field *fld[] = {
+        ifld,
+        rfld,
+        tfld
     };
 
-    size_t len = sizeof attr / sizeof *attr;
-    inquery_record_smart *ctx = inquery_record_new(attr, len);
+    size_t len = sizeof fld / sizeof *fld;
+    inquery_record_smart *ctx = inquery_record_new(fld, len);
     inquery_string_smart *json = inquery_record_json(ctx);
 
     inquery_require (inquery_string_eq (json,

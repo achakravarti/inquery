@@ -26,9 +26,9 @@ extern void inquery_test_suite_value(void);
 
 
 /*
- * inquery_test_suite_attribute() - attribute interface test suite
+ * inquery_test_suite_field() - field interface test suite
  */
-extern void inquery_test_suite_attribute(void);
+extern void inquery_test_suite_field(void);
 
 
 /*
