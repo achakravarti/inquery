@@ -755,5 +755,72 @@ extern void inquery_record_set(inquery_record **ctx, size_t col,
 extern inquery_string *inquery_record_json(const inquery_record *ctx);
 
 
+/*
+ * inquery_table - database table
+ */
+typedef inquery_object inquery_table;
+
+
+/*
+ * inquery_table_smart - smart table
+ */
+#define inquery_table_smart inquery_object_smart
+
+
+/*
+ * inquery_table_new() - create new table
+ */
+extern inquery_table *inquery_table_new(size_t len, const inquery_record **rec);
+
+
+/*
+ * inquery_table_new() - create new empty table
+ */
+extern inquery_table *inquery_table_new_empty(size_t len);
+
+
+/*
+ * inquery_table_copy() - copy existing table
+ */
+inline inquery_table *inquery_table_copy(const inquery_table *ctx)
+{
+    return inquery_object_copy(ctx);
+}
+
+
+/*
+ * inquery_table_free() - free existing table
+ */
+inline void inquery_table_free(inquery_table **ctx)
+{
+    inquery_object_free(ctx);
+}
+
+
+/*
+ * inquery_table_len() - get table length
+ */
+extern size_t inquery_table_len(const inquery_table *ctx);
+
+
+/*
+ * inquery_table_get() - get table record
+ */
+extern inquery_record *inquery_table_get(const inquery_table *ctx, size_t col);
+
+
+/*
+ * inquery_table_set() - set table record
+ */
+extern void inquery_table_set(inquery_table **ctx, size_t col, 
+        const inquery_record *val);
+
+
+/*
+ * inquery_table_json() - represent table as JSON
+ */
+extern inquery_string *inquery_table_json(const inquery_table *ctx);
+
+
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
 
