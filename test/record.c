@@ -2,24 +2,36 @@
 #include "suite.h"
 
 
+/*
+ * attrib_int() - create sample int attribute
+ */
 static inquery_attribute *attrib_int(void)
 {
     return inquery_attribute_new_int("int", 555);
 }
 
 
+/*
+ * attrib_real() - create sample real attribute
+ */
 static inquery_attribute *attrib_real(void)
 {
     return inquery_attribute_new_real("real", -666.66);
 }
 
 
+/*
+ * attrib_text() - create sample text attribute
+ */
 static inquery_attribute *attrib_text(void)
 {
     return inquery_attribute_new_text("text", "test");
 }
 
 
+/*
+ * new_1() - test case #1 for inquery_record_new()
+ */
 static void new_1(void)
 {
     printf("inquery_record new() creates a new record");
@@ -50,6 +62,9 @@ static void new_1(void)
 }
 
 
+/*
+ * copy_1() - test case #1 for inquery_record_copy()
+ */
 static void copy_1(void)
 {
     printf("inquery_record_copy() creates a copy of an existing record");
@@ -81,6 +96,9 @@ static void copy_1(void)
 }
 
 
+/*
+ * set_1() - test case #1 for inquery_record_set()
+ */
 static void set_1(void)
 {
     printf("inquery_record_set() updates a record attribute");
@@ -111,6 +129,9 @@ static void set_1(void)
 }
 
 
+/*
+ * json_1() - test case #1 for inquery_record_json()
+ */
 static void json_1(void)
 {
     printf("inquery_record_json() correctly represents a record");
@@ -136,6 +157,9 @@ static void json_1(void)
 }
 
 
+/*
+ * inquery_test_suite_record() - record interface test suite
+ */
 extern void inquery_test_suite_record(void)
 {
     printf("===============================================================\n");

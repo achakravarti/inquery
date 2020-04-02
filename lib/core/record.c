@@ -1,12 +1,18 @@
 #include "core.h"
 
 
+/*
+ * struct payload - object payload for record instance
+ */
 struct payload {
     inquery_attribute **attr;
     size_t len;
 };
 
 
+/*
+ * payload_new() - create new record payload
+ */
 static struct payload *payload_new(const inquery_attribute **attr, size_t len)
 {
     struct payload *ctx = inquery_heap_new(sizeof *ctx);
@@ -22,6 +28,9 @@ static struct payload *payload_new(const inquery_attribute **attr, size_t len)
 }
 
 
+/*
+ * payload_copy() - copy callback for record object v-table
+ */
 static void *payload_copy(const void *ctx)
 {
     const struct payload *src = (const struct payload *) ctx;
@@ -29,6 +38,9 @@ static void *payload_copy(const void *ctx)
 }
 
 
+/*
+ * payload_free() - free callback for record object v-table
+ */
 static void payload_free(void *ctx)
 {
     struct payload *hnd = (struct payload *) ctx;
@@ -40,6 +52,9 @@ static void payload_free(void *ctx)
 }
 
 
+/*
+ * inquery_record_new() - create new record
+ */
 extern inquery_record *inquery_record_new(const inquery_attribute **attr,
         size_t len)
 {
@@ -53,12 +68,32 @@ extern inquery_record *inquery_record_new(const inquery_attribute **attr,
 }
 
 
+/*
+ * inquery_record_copy() - copy existing record
+ */
 extern inline inquery_record *inquery_record_copy(const inquery_record *ctx);
 
 
+/*
+ * inquery_record_free() - free existing record
+ */
 extern inline void inquery_record_free(inquery_record **ctx);
 
 
+/*
+ * inquery_record_len() - get record length
+ */
+extern size_t inquery_record_len(const inquery_record *ctx)
+{
+    inquery_assert (ctx);
+    const struct payload *payload = inquery_object_payload(ctx);
+    return payload->len;
+}
+
+
+/*
+ * inquery_record_get() - get record attribute
+ */
 extern inquery_attribute *inquery_record_get(const inquery_record *ctx,
         size_t col)
 {
@@ -70,6 +105,9 @@ extern inquery_attribute *inquery_record_get(const inquery_record *ctx,
 }
 
 
+/*
+ * inquery_record_set() - set record attribute
+ */
 extern void inquery_record_set(inquery_record **ctx, size_t col,
         const inquery_attribute *val)
 {
@@ -82,14 +120,9 @@ extern void inquery_record_set(inquery_record **ctx, size_t col,
 }
 
 
-extern size_t inquery_record_len(const inquery_record *ctx)
-{
-    inquery_assert (ctx);
-    const struct payload *payload = inquery_object_payload(ctx);
-    return payload->len;
-}
-
-
+/*
+ * inquery_record_json() - represent record as JSON
+ */
 extern inquery_string *inquery_record_json(const inquery_record *ctx)
 {
     inquery_assert (ctx);

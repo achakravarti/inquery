@@ -692,32 +692,68 @@ extern inquery_string *inquery_attribute_string(const inquery_attribute *ctx);
 extern inquery_string *inquery_attribute_json(const inquery_attribute *ctx);
 
 
+/*
+ * inquery_record - database record
+ */
 typedef inquery_object inquery_record;
 
+
+/*
+ * inquery_record_smart - smart record
+ */
 #define inquery_record_smart inquery_object_smart
 
+
+/*
+ * inquery_record_new() - create new record
+ */
 extern inquery_record *inquery_record_new(const inquery_attribute **attr,
         size_t len);
 
+
+/*
+ * inquery_record_copy() - copy existing record
+ */
 inline inquery_record *inquery_record_copy(const inquery_record *ctx)
 {
     return inquery_object_copy(ctx);
 }
 
+
+/*
+ * inquery_record_free() - free existing record
+ */
 inline void inquery_record_free(inquery_record **ctx)
 {
     inquery_object_free(ctx);
 }
 
+
+/*
+ * inquery_record_len() - get record length
+ */
+extern size_t inquery_record_len(const inquery_record *ctx);
+
+
+/*
+ * inquery_record_get() - get record attribute
+ */
 extern inquery_attribute *inquery_record_get(const inquery_record *ctx,
         size_t col);
 
+
+/*
+ * inquery_record_set() - set record attribute
+ */
 extern void inquery_record_set(inquery_record **ctx, size_t col,
         const inquery_attribute *val);
 
-extern size_t inquery_record_len(const inquery_record *ctx);
 
+/*
+ * inquery_record_json() - represent record as JSON
+ */
 extern inquery_string *inquery_record_json(const inquery_record *ctx);
+
 
 #endif /* INQUERY_CORE_HEADER_INCLUDED */
 
