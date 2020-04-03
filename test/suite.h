@@ -37,5 +37,11 @@ extern void inquery_test_suite_field(void);
 extern void inquery_test_suite_record(void);
 
 
+/*
+ * inquery_test_suite_table() - table interface test suite
+ */
+extern void inquery_test_suite_table(void);
+
+
 #endif /* INQUERY_TEST_SUITE_HEADER */
 
