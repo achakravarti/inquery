@@ -1,6 +1,9 @@
 #include "core.h"
 
 
+/*
+ * struct payload - object payload for table instance
+ */
 struct payload {
     size_t len;
     inquery_record **rec;
@@ -8,10 +11,69 @@ struct payload {
 
 
 /*
+ * payload_new() - create new table object payload
+ */
+static struct payload *payload_new(size_t len, const inquery_record **rec)
+{
+    struct payload *ctx = inquery_heap_new(sizeof *ctx);
+    ctx->len = len;
+
+    size_t sz = sizeof *rec * len;
+    ctx->rec = inquery_heap_new(sz);
+
+    if (rec) {
+        for (register size_t i = 0; i < len; i++)
+            ctx->rec[i] = inquery_record_copy(rec[i]);
+    }
+
+    return ctx;
+}
+
+
+/*
+ * payload_copy() - copy callback for table object v-table
+ */
+static void *payload_copy(const void *ctx)
+{
+    const struct payload *src = (const struct payload *) ctx;
+    return payload_new(src->len, (const inquery_record **) src->rec);
+}
+
+
+/*
+ * payload_free() - free callback for table object v-table
+ */
+static void payload_free(void *ctx)
+{
+    struct payload *hnd = (struct payload *) ctx;
+
+    for (register size_t i = 0; i < hnd->len; i++)
+        inquery_record_free(&hnd->rec[i]);
+
+    inquery_heap_free((void **) &hnd->rec);
+}
+
+
+/*
+ * vtable_init() - initialise table object v-table
+ */
+static inline void vtable_init(struct inquery_object_vtable *ctx)
+{
+    ctx->payload_copy = &payload_copy;
+    ctx->payload_free = &payload_free;
+}
+
+
+/*
  * inquery_table_new() - create new table
  */
 extern inquery_table *inquery_table_new(size_t len, const inquery_record **rec)
 {
+    struct inquery_object_vtable vt;
+    vtable_init(&vt);
+
+    inquery_assert (len && rec && *rec);
+    return inquery_object_new(payload_new(len, rec), &vt);
 }
 
 
@@ -20,6 +82,11 @@ extern inquery_table *inquery_table_new(size_t len, const inquery_record **rec)
  */
 extern inquery_table *inquery_table_new_empty(size_t len)
 {
+    struct inquery_object_vtable vt;
+    vtable_init(&vt);
+
+    inquery_assert (len);
+    return inquery_object_new(payload_new(len, NULL), &vt);
 }
 
 
@@ -114,5 +181,27 @@ extern void inquery_table_field_set(inquery_table **ctx, size_t row, size_t col,
  */
 extern inquery_string *inquery_table_json(const inquery_table *ctx)
 {
+    inquery_assert (ctx);
+    const struct payload *payload = inquery_object_payload(ctx);
+
+    inquery_string *json = inquery_string_new("[");
+    inquery_string *recjson;
+
+    if (inquery_likely (payload->len)) {
+        register size_t i = 0, end = payload->len - 1;
+        for (; i < end; i++) {
+            recjson = inquery_record_json(payload->rec[i]);
+            inquery_string_add(&json, recjson);
+            inquery_string_add(&json, ",");
+            inquery_string_free(&recjson);
+        }
+
+        recjson = inquery_record_json(payload->rec[end]);
+        inquery_string_add(&json, recjson);
+        inquery_string_free(&recjson);
+    }
+
+    inquery_string_add(&json, "]");
+    return json;
 }
 
